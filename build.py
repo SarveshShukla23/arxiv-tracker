@@ -4,16 +4,13 @@ import urllib.error
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-# arXiv API URL for cs.AI, quant-ph, and general cs
-# Sorting by submittedDate, descending. Grabbing top 20.
-URL = 'http://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:quant-ph+OR+cat:cs.*&sortBy=submittedDate&sortOrder=desc&max_results=20'
-
-def fetch_papers():
+# Helper function to fetch a specific list of papers
+def fetch_papers(query, sort_by="submittedDate", max_results=5):
     params = {
-        "search_query": "cat:cs.AI OR cat:cs.LG", 
-        "sortBy": "submittedDate",
+        "search_query": query, 
+        "sortBy": sort_by,
         "sortOrder": "descending",
-        "max_results": 10
+        "max_results": max_results
     }
     
     query_string = urllib.parse.urlencode(params)
@@ -27,14 +24,11 @@ def fetch_papers():
     try:
         with urllib.request.urlopen(req) as response:
             data = response.read() 
-            
-            # Parse the XML
             root = ET.fromstring(data)
             namespace = {'atom': 'http://www.w3.org/2005/Atom'}
             
             parsed_papers = []
             
-            # Extract all data needed for the HTML template
             for entry in root.findall('atom:entry', namespace):
                 title = entry.find('atom:title', namespace).text.replace('\n', ' ').strip()
                 link = entry.find('atom:id', namespace).text
@@ -43,12 +37,8 @@ def fetch_papers():
                 author_string = ", ".join(authors) if authors else "Unknown"
                 
                 date_string = entry.find('atom:published', namespace).text[:10]
-                
-                # --- NEW: Extract Summary (Abstract) ---
-                # Replacing newlines with spaces so it flows cleanly in your HTML
                 summary = entry.find('atom:summary', namespace).text.replace('\n', ' ').strip()
                 
-                # Append ALL the data your generate_html function expects
                 parsed_papers.append({
                     'title': title, 
                     'link': link,
@@ -62,50 +52,86 @@ def fetch_papers():
     except urllib.error.HTTPError as e:
         print(f"Crash details: HTTP {e.code} - {e.reason}")
         print(f"arXiv Server says: {e.read().decode('utf-8')}")
-        raise
-            
-    except urllib.error.HTTPError as e:
-        print(f"Crash details: HTTP {e.code} - {e.reason}")
-        print(f"arXiv Server says: {e.read().decode('utf-8')}")
-        raise
-def generate_html(papers):
+        raise 
+
+# Function to build the HTML page
+def generate_html(all_data):
+    # Start the HTML document
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Daily arXiv: AI, CS & Quantum</title>
+        <title>arXiv Tracker</title>
         <style>
-            body {{ font-family: system-ui, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }}
-            .paper {{ margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }}
-            h2 {{ margin-bottom: 5px; color: #1a0dab; }}
-            a {{ text-decoration: none; color: inherit; }}
-            a:hover {{ text-decoration: underline; }}
-            .meta {{ color: #666; font-size: 0.9em; margin-bottom: 10px; }}
-            .summary {{ background: #f9f9f9; padding: 15px; border-left: 4px solid #ccc; }}
+            body {{ font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }}
+            h1 {{ color: #222; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-top: 40px; }}
+            h2 {{ color: #444; margin-top: 30px; }}
+            .paper {{ margin-bottom: 25px; padding: 15px; background-color: #f9f9f9; border-radius: 5px; }}
+            .paper h3 {{ margin: 0 0 10px 0; }}
+            .paper a {{ color: #1a0dab; text-decoration: none; }}
+            .paper a:hover {{ text-decoration: underline; }}
+            .meta {{ color: #555; font-size: 0.9em; margin-bottom: 10px; }}
+            .summary {{ font-size: 0.95em; line-height: 1.5; }}
+            .timestamp {{ color: #666; font-style: italic; }}
         </style>
     </head>
     <body>
-        <h1>Latest arXiv Updates</h1>
-        <p><em>Last updated: {datetime.now().strftime("%Y-%m-%d %H:%M")}</em></p>
+        <p class="timestamp">Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
     """
-    
-    for p in papers:
-        html_content += f"""
-        <div class="paper">
-            <h2><a href="{p['link']}" target="_blank">{p['title']}</a></h2>
-            <div class="meta">By {p['author']} • Published: {p['date']}</div>
-            <div class="summary">{p['summary'][:300]}... <a href="{p['link']}" target="_blank" style="color:#1a0dab;">Read more</a></div>
-        </div>
-        """
+
+    # Loop through Categories (CS, AI, Quantum)
+    for category_name, sections in all_data.items():
+        html_content += f"<h1>{category_name}</h1>"
         
-    html_content += "</body></html>"
-    
-    with open('index.html', 'w', encoding='utf-8') as f:
+        # Loop through Sections (Latest, Key Papers)
+        for section_name, papers in sections.items():
+            html_content += f"<h2>{section_name}</h2>"
+            
+            # Loop through individual papers
+            for p in papers:
+                html_content += f"""
+                <div class="paper">
+                    <h3><a href="{p['link']}" target="_blank">{p['title']}</a></h3>
+                    <div class="meta">By {p['author']} • Published: {p['date']}</div>
+                    <div class="summary">{p['summary'][:300]}... <a href="{p['link']}" target="_blank">Read more</a></div>
+                </div>
+                """
+
+    # Close HTML document
+    html_content += """
+    </body>
+    </html>
+    """
+
+    # Save to file
+    with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
 
+# --- MAIN SCRIPT EXECUTION ---
 if __name__ == "__main__":
-    papers = fetch_papers()
-    generate_html(papers)
-    print("Successfully generated index.html")
+    
+    # 1. Define the categories and fetch the data
+    # We store everything in a nested dictionary
+    print("Fetching papers...")
+    
+    tracker_data = {
+        "Artificial Intelligence": {
+            "Latest Updates": fetch_papers("cat:cs.AI", sort_by="submittedDate", max_results=5),
+            "Key Foundational Papers": fetch_papers("cat:cs.AI", sort_by="relevance", max_results=20)
+        },
+        "Computer Science (General)": {
+            "Latest Updates": fetch_papers("cat:cs.CR OR cat:cs.SE OR cat:cs.DS", sort_by="submittedDate", max_results=5),
+            "Key Foundational Papers": fetch_papers("cat:cs.CR OR cat:cs.SE OR cat:cs.DS", sort_by="relevance", max_results=20)
+        },
+        "Quantum Physics": {
+            "Latest Updates": fetch_papers("cat:quant-ph", sort_by="submittedDate", max_results=5),
+            "Key Foundational Papers": fetch_papers("cat:quant-ph", sort_by="relevance", max_results=20)
+        }
+    }
+    
+    # 2. Pass all that data to the HTML generator
+    print("Generating HTML...")
+    generate_html(tracker_data)
+    print("Done! index.html created successfully.")
