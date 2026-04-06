@@ -9,8 +9,6 @@ from datetime import datetime
 URL = 'http://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:quant-ph+OR+cat:cs.*&sortBy=submittedDate&sortOrder=desc&max_results=20'
 
 def fetch_papers():
-    # 1. Define your parameters as a dictionary
-    # For example, searching for AI and Machine Learning papers
     params = {
         "search_query": "cat:cs.AI OR cat:cs.LG", 
         "sortBy": "submittedDate",
@@ -18,26 +16,34 @@ def fetch_papers():
         "max_results": 10
     }
     
-    # 2. Let Python safely encode the parameters
     query_string = urllib.parse.urlencode(params)
     url = f"http://export.arxiv.org/api/query?{query_string}"
     
-    # 3. Use a standard User-Agent
     req = urllib.request.Request(
         url,
         headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
     )
     
-    # 4. Fetch with detailed error handling
     try:
         with urllib.request.urlopen(req) as response:
-            data = response.read()
-            # print("Success! Fetched data.")
-            return data
+            data = response.read() 
+            
+            # Parse the XML
+            root = ET.fromstring(data)
+            namespace = {'atom': 'http://www.w3.org/2005/Atom'}
+            
+            parsed_papers = []
+            
+            # Extract title and link for each paper
+            for entry in root.findall('atom:entry', namespace):
+                title = entry.find('atom:title', namespace).text.replace('\n', ' ').strip()
+                link = entry.find('atom:id', namespace).text
+                parsed_papers.append({'title': title, 'link': link})
+                
+            return parsed_papers
             
     except urllib.error.HTTPError as e:
         print(f"Crash details: HTTP {e.code} - {e.reason}")
-        # This will print the exact reason arXiv rejected the request!
         print(f"arXiv Server says: {e.read().decode('utf-8')}")
         raise
 
