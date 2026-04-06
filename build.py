@@ -1,4 +1,6 @@
 import urllib.request
+import urllib.parse
+import urllib.error
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
@@ -7,27 +9,37 @@ from datetime import datetime
 URL = 'http://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:quant-ph+OR+cat:cs.*&sortBy=submittedDate&sortOrder=desc&max_results=20'
 
 def fetch_papers():
-    response = urllib.request.urlopen(URL).read()
-    root = ET.fromstring(response)
+    # 1. Define your parameters as a dictionary
+    # For example, searching for AI and Machine Learning papers
+    params = {
+        "search_query": "cat:cs.AI OR cat:cs.LG", 
+        "sortBy": "submittedDate",
+        "sortOrder": "descending",
+        "max_results": 10
+    }
     
-    # arXiv XML uses namespaces
-    ns = {'atom': 'http://www.w3.org/2005/Atom'}
+    # 2. Let Python safely encode the parameters
+    query_string = urllib.parse.urlencode(params)
+    url = f"http://export.arxiv.org/api/query?{query_string}"
     
-    papers = []
-    for entry in root.findall('atom:entry', ns):
-        title = entry.find('atom:title', ns).text.replace('\n', ' ')
-        summary = entry.find('atom:summary', ns).text.replace('\n', ' ')
-        link = entry.find('atom:id', ns).text
-        published = entry.find('atom:published', ns).text[:10]
-        
-        # Grab primary author
-        author = entry.find('atom:author/atom:name', ns).text
-        
-        papers.append({
-            'title': title, 'author': author, 'summary': summary, 
-            'link': link, 'date': published
-        })
-    return papers
+    # 3. Use a standard User-Agent
+    req = urllib.request.Request(
+        url,
+        headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+    )
+    
+    # 4. Fetch with detailed error handling
+    try:
+        with urllib.request.urlopen(req) as response:
+            data = response.read()
+            # print("Success! Fetched data.")
+            return data
+            
+    except urllib.error.HTTPError as e:
+        print(f"Crash details: HTTP {e.code} - {e.reason}")
+        # This will print the exact reason arXiv rejected the request!
+        print(f"arXiv Server says: {e.read().decode('utf-8')}")
+        raise
 
 def generate_html(papers):
     html_content = f"""
