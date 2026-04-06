@@ -34,29 +34,35 @@ def fetch_papers():
             
             parsed_papers = []
             
-            # Extract title, link, author, and date for each paper
+            # Extract all data needed for the HTML template
             for entry in root.findall('atom:entry', namespace):
                 title = entry.find('atom:title', namespace).text.replace('\n', ' ').strip()
                 link = entry.find('atom:id', namespace).text
                 
-                # --- NEW: Extract Authors ---
-                # A paper can have multiple authors, so we find all of them and join with commas
                 authors = [author.find('atom:name', namespace).text for author in entry.findall('atom:author', namespace)]
                 author_string = ", ".join(authors) if authors else "Unknown"
                 
-                # --- NEW: Extract Date ---
-                # arXiv returns dates like "2026-04-05T18:00:00Z". The [:10] slices it to just "2026-04-05"
                 date_string = entry.find('atom:published', namespace).text[:10]
                 
-                # Now we pass all four pieces of data to your HTML generator!
+                # --- NEW: Extract Summary (Abstract) ---
+                # Replacing newlines with spaces so it flows cleanly in your HTML
+                summary = entry.find('atom:summary', namespace).text.replace('\n', ' ').strip()
+                
+                # Append ALL the data your generate_html function expects
                 parsed_papers.append({
                     'title': title, 
                     'link': link,
                     'author': author_string,
-                    'date': date_string
+                    'date': date_string,
+                    'summary': summary
                 })
                 
             return parsed_papers
+            
+    except urllib.error.HTTPError as e:
+        print(f"Crash details: HTTP {e.code} - {e.reason}")
+        print(f"arXiv Server says: {e.read().decode('utf-8')}")
+        raise
             
     except urllib.error.HTTPError as e:
         print(f"Crash details: HTTP {e.code} - {e.reason}")
