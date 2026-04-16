@@ -129,8 +129,7 @@ if __name__ == "__main__":
         "Quantum Physics": {
             "Latest Updates": fetch_papers("cat:quant-ph", sort_by="submittedDate", max_results=5),
             "Key Foundational Papers": fetch_papers("cat:quant-ph", sort_by="relevance", max_results=10),
-            "Papers from Top Authors": fetch_papers('cat:quant-ph AND (au:Preskill OR au:Aaronson OR au:Shor, au: "M. Cerezo" AND "Barren Plateaus",
-au: "Hsin-Yuan Huang" AND "Learning")', sort_by="submittedDate", max_results=10)
+            "Papers from Top Authors": fetch_papers('cat:quant-ph AND (au:Preskill OR au:Aaronson OR au:Shor, au: "M. Cerezo" AND "Barren Plateaus", au: "Hsin-Yuan Huang" AND "Learning")', sort_by="submittedDate", max_results=10)
         }
     }
     
