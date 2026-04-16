@@ -119,16 +119,16 @@ if __name__ == "__main__":
     tracker_data = {
         "Artificial Intelligence": {
             "Latest Updates": fetch_papers("cat:cs.AI", sort_by="submittedDate", max_results=5),
-            "Key Foundational Papers": fetch_papers("cat:cs.AI", sort_by="relevance", max_results=20),
+            "Key Foundational Papers": fetch_papers("cat:cs.AI", sort_by="relevance", max_results=10),
             "Papers from Top Authors": fetch_papers('cat:cs.AI AND (au:Bengio OR au:LeCun OR au:Hinton OR au:"Andrew Ng" OR au:"Sutskever" OR au:"Fei-Fei Li")', sort_by="submittedDate", max_results=10)
         },
         "Computer Science (General)": {
             "Latest Updates": fetch_papers("cat:cs.CR OR cat:cs.SE OR cat:cs.DS", sort_by="submittedDate", max_results=5),
-            "Key Foundational Papers": fetch_papers("cat:cs.CR OR cat:cs.SE OR cat:cs.DS", sort_by="relevance", max_results=20)
+            "Key Foundational Papers": fetch_papers("cat:cs.CR OR cat:cs.SE OR cat:cs.DS", sort_by="relevance", max_results=10)
         },
         "Quantum Physics": {
             "Latest Updates": fetch_papers("cat:quant-ph", sort_by="submittedDate", max_results=5),
-            "Key Foundational Papers": fetch_papers("cat:quant-ph", sort_by="relevance", max_results=20),
+            "Key Foundational Papers": fetch_papers("cat:quant-ph", sort_by="relevance", max_results=10),
             "Papers from Top Authors": fetch_papers('cat:quant-ph AND (au:Preskill OR au:Aaronson OR au:Shor, au: "M. Cerezo" AND "Barren Plateaus",
 au: "Hsin-Yuan Huang" AND "Learning")', sort_by="submittedDate", max_results=10)
         }
