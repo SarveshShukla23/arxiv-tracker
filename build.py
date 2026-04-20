@@ -10,7 +10,7 @@ import time
 def fetch_papers(query, sort_by="submittedDate", max_results=5):
 
     print(f"Waiting 3 seconds to respect API limits... then fetching: {query}")
-    time.sleep(3)
+    time.sleep(3) 
     
     params = {
         "search_query": query, 
@@ -59,13 +59,6 @@ def fetch_papers(query, sort_by="submittedDate", max_results=5):
         print(f"Crash details: HTTP {e.code} - {e.reason}")
         print(f"arXiv Server says: {e.read().decode('utf-8')}")
         raise
-                
-            return parsed_papers
-            
-    except urllib.error.HTTPError as e:
-        print(f"Crash details: HTTP {e.code} - {e.reason}")
-        print(f"arXiv Server says: {e.read().decode('utf-8')}")
-        raise 
 
 # Function to build the HTML page
 def generate_html(all_data):
