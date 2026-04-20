@@ -56,51 +56,176 @@ def fetch_papers(query, sort_by="submittedDate", max_results=5):
 
 # Function to build the HTML page
 def generate_html(all_data):
-    # Start the HTML document
+    # CSS UI Variables and Google Fonts for a modern, professional look
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>arXiv Tracker</title>
+        <title>arXiv Research Tracker</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
         <style>
-            body {{ font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }}
-            h1 {{ color: #222; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-top: 40px; }}
-            h2 {{ color: #444; margin-top: 30px; }}
-            .paper {{ margin-bottom: 25px; padding: 15px; background-color: #f9f9f9; border-radius: 5px; }}
-            .paper h3 {{ margin: 0 0 10px 0; }}
-            .paper a {{ color: #1a0dab; text-decoration: none; }}
-            .paper a:hover {{ text-decoration: underline; }}
-            .meta {{ color: #555; font-size: 0.9em; margin-bottom: 10px; }}
-            .summary {{ font-size: 0.95em; line-height: 1.5; }}
-            .timestamp {{ color: #666; font-style: italic; }}
+            :root {{
+                --bg-color: #f8fafc;
+                --card-bg: #ffffff;
+                --text-main: #1e293b;
+                --text-muted: #64748b;
+                --accent-primary: #2563eb;
+                --accent-hover: #1d4ed8;
+                --border-color: #e2e8f0;
+            }}
+            body {{ 
+                font-family: 'Inter', -apple-system, sans-serif; 
+                background-color: var(--bg-color); 
+                color: var(--text-main); 
+                line-height: 1.6; 
+                margin: 0; 
+                padding: 0; 
+            }}
+            .container {{ 
+                max-width: 1000px; 
+                margin: 0 auto; 
+                padding: 60px 20px; 
+            }}
+            header {{
+                text-align: center;
+                margin-bottom: 60px;
+            }}
+            header h1 {{
+                font-size: 2.5em;
+                color: #0f172a;
+                margin-bottom: 12px;
+                letter-spacing: -0.02em;
+            }}
+            .timestamp {{ 
+                color: var(--text-muted); 
+                font-size: 0.95em; 
+                background: #f1f5f9;
+                display: inline-block;
+                padding: 6px 16px;
+                border-radius: 20px;
+                border: 1px solid var(--border-color);
+            }}
+            .category-section {{
+                margin-bottom: 70px;
+            }}
+            h1.category-title {{ 
+                color: #0f172a; 
+                border-bottom: 2px solid var(--border-color); 
+                padding-bottom: 12px; 
+                margin-top: 0; 
+                font-size: 2em; 
+            }}
+            h2.section-title {{ 
+                color: var(--accent-primary); 
+                margin-top: 40px; 
+                margin-bottom: 24px;
+                font-size: 1.2em; 
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                font-weight: 700;
+            }}
+            .paper-card {{ 
+                background-color: var(--card-bg); 
+                border: 1px solid var(--border-color);
+                border-radius: 12px; 
+                padding: 28px; 
+                margin-bottom: 24px; 
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+                transition: transform 0.2s ease, box-shadow 0.2s ease; 
+            }}
+            .paper-card:hover {{
+                transform: translateY(-3px);
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+                border-color: #cbd5e1;
+            }}
+            .paper-title {{ 
+                margin: 0 0 12px 0; 
+                font-size: 1.4em; 
+                line-height: 1.3;
+            }}
+            .paper-title a {{ 
+                color: #0f172a; 
+                text-decoration: none; 
+            }}
+            .paper-title a:hover {{ 
+                color: var(--accent-primary); 
+            }}
+            .meta-info {{ 
+                color: var(--text-muted); 
+                font-size: 0.9em; 
+                margin-bottom: 18px; 
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }}
+            .meta-item {{
+                display: flex;
+                align-items: center;
+            }}
+            .summary {{ 
+                color: #334155; 
+                font-size: 1em; 
+                margin-bottom: 20px;
+            }}
+            .read-more-btn {{
+                display: inline-block;
+                padding: 8px 16px;
+                background-color: #eff6ff;
+                color: var(--accent-primary);
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 0.9em;
+                border-radius: 6px;
+                transition: background-color 0.2s ease, color 0.2s ease;
+            }}
+            .read-more-btn:hover {{
+                background-color: var(--accent-primary);
+                color: #ffffff;
+            }}
         </style>
     </head>
     <body>
-        <p class="timestamp">Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+        <div class="container">
+            <header>
+                <h1>arXiv Research Tracker</h1>
+                <div class="timestamp">Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</div>
+            </header>
     """
 
-    # Loop through Categories (CS, AI, Quantum)
+    # Loop through Categories (e.g., Artificial Intelligence, Computer Science)
     for category_name, sections in all_data.items():
-        html_content += f"<h1>{category_name}</h1>"
+        html_content += f"""
+            <div class="category-section">
+                <h1 class="category-title">{category_name}</h1>
+        """
         
-        # Loop through Sections (Latest, Key Papers)
+        # Loop through Sections (e.g., Latest Updates, Key Foundational Papers)
         for section_name, papers in sections.items():
-            html_content += f"<h2>{section_name}</h2>"
+            html_content += f'<h2 class="section-title">{section_name}</h2>'
             
-            # Loop through individual papers
+            # Loop through individual papers to create the cards
             for p in papers:
                 html_content += f"""
-                <div class="paper">
-                    <h3><a href="{p['link']}" target="_blank">{p['title']}</a></h3>
-                    <div class="meta">By {p['author']} • Published: {p['date']}</div>
-                    <div class="summary">{p['summary'][:300]}... <a href="{p['link']}" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="{p['link']}" target="_blank">{p['title']}</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;{p['author']}</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;{p['date']}</span>
+                    </div>
+                    <div class="summary">{p['summary'][:350]}...</div>
+                    <a href="{p['link']}" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 """
+        
+        html_content += "</div>" # Close category-section div
 
     # Close HTML document
     html_content += """
+        </div>
     </body>
     </html>
     """
