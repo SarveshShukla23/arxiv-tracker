@@ -3,9 +3,15 @@ import urllib.parse
 import urllib.error
 import xml.etree.ElementTree as ET
 from datetime import datetime
+import time
 
 # Helper function to fetch a specific list of papers
+
 def fetch_papers(query, sort_by="submittedDate", max_results=5):
+
+    print(f"Waiting 3 seconds to respect API limits... then fetching: {query}")
+    time.sleep(3)
+    
     params = {
         "search_query": query, 
         "sortBy": sort_by,
@@ -46,6 +52,13 @@ def fetch_papers(query, sort_by="submittedDate", max_results=5):
                     'date': date_string,
                     'summary': summary
                 })
+                
+            return parsed_papers
+            
+    except urllib.error.HTTPError as e:
+        print(f"Crash details: HTTP {e.code} - {e.reason}")
+        print(f"arXiv Server says: {e.read().decode('utf-8')}")
+        raise
                 
             return parsed_papers
             
