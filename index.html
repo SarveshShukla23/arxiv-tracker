@@ -4,413 +4,798 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>arXiv Tracker</title>
+        <title>arXiv Research Tracker</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
         <style>
-            body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
-            h1 { color: #222; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-top: 40px; }
-            h2 { color: #444; margin-top: 30px; }
-            .paper { margin-bottom: 25px; padding: 15px; background-color: #f9f9f9; border-radius: 5px; }
-            .paper h3 { margin: 0 0 10px 0; }
-            .paper a { color: #1a0dab; text-decoration: none; }
-            .paper a:hover { text-decoration: underline; }
-            .meta { color: #555; font-size: 0.9em; margin-bottom: 10px; }
-            .summary { font-size: 0.95em; line-height: 1.5; }
-            .timestamp { color: #666; font-style: italic; }
+            :root {
+                --bg-color: #f8fafc;
+                --card-bg: #ffffff;
+                --text-main: #1e293b;
+                --text-muted: #64748b;
+                --accent-primary: #2563eb;
+                --accent-hover: #1d4ed8;
+                --border-color: #e2e8f0;
+            }
+            body { 
+                font-family: 'Inter', -apple-system, sans-serif; 
+                background-color: var(--bg-color); 
+                color: var(--text-main); 
+                line-height: 1.6; 
+                margin: 0; 
+                padding: 0; 
+            }
+            .container { 
+                max-width: 1000px; 
+                margin: 0 auto; 
+                padding: 60px 20px; 
+            }
+            header {
+                text-align: center;
+                margin-bottom: 60px;
+            }
+            header h1 {
+                font-size: 2.5em;
+                color: #0f172a;
+                margin-bottom: 12px;
+                letter-spacing: -0.02em;
+            }
+            .timestamp { 
+                color: var(--text-muted); 
+                font-size: 0.95em; 
+                background: #f1f5f9;
+                display: inline-block;
+                padding: 6px 16px;
+                border-radius: 20px;
+                border: 1px solid var(--border-color);
+            }
+            .category-section {
+                margin-bottom: 70px;
+            }
+            h1.category-title { 
+                color: #0f172a; 
+                border-bottom: 2px solid var(--border-color); 
+                padding-bottom: 12px; 
+                margin-top: 0; 
+                font-size: 2em; 
+            }
+            h2.section-title { 
+                color: var(--accent-primary); 
+                margin-top: 40px; 
+                margin-bottom: 24px;
+                font-size: 1.2em; 
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                font-weight: 700;
+            }
+            .paper-card { 
+                background-color: var(--card-bg); 
+                border: 1px solid var(--border-color);
+                border-radius: 12px; 
+                padding: 28px; 
+                margin-bottom: 24px; 
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+                transition: transform 0.2s ease, box-shadow 0.2s ease; 
+            }
+            .paper-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+                border-color: #cbd5e1;
+            }
+            .paper-title { 
+                margin: 0 0 12px 0; 
+                font-size: 1.4em; 
+                line-height: 1.3;
+            }
+            .paper-title a { 
+                color: #0f172a; 
+                text-decoration: none; 
+            }
+            .paper-title a:hover { 
+                color: var(--accent-primary); 
+            }
+            .meta-info { 
+                color: var(--text-muted); 
+                font-size: 0.9em; 
+                margin-bottom: 18px; 
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .meta-item {
+                display: flex;
+                align-items: center;
+            }
+            .summary { 
+                color: #334155; 
+                font-size: 1em; 
+                margin-bottom: 20px;
+            }
+            .read-more-btn {
+                display: inline-block;
+                padding: 8px 16px;
+                background-color: #eff6ff;
+                color: var(--accent-primary);
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 0.9em;
+                border-radius: 6px;
+                transition: background-color 0.2s ease, color 0.2s ease;
+            }
+            .read-more-btn:hover {
+                background-color: var(--accent-primary);
+                color: #ffffff;
+            }
         </style>
     </head>
     <body>
-        <p class="timestamp">Last updated: 2026-04-19 08:41:44</p>
-    <h1>Artificial Intelligence</h1><h2>Latest Updates</h2>
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15309v1" target="_blank">MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation</a></h3>
-                    <div class="meta">By Yan Li, Zezi Zeng, Yifan Yang, Yuqing Yang, Ning Liao, Weiwei Guo, Lili Qiu, Mingxi Cheng, Qi Dai, Zhendong Wang, Zhengyuan Yang, Xue Yang, Ji Li, Lijuan Wang, Chong Luo • Published: 2026-04-16</div>
-                    <div class="summary">The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage ... <a href="http://arxiv.org/abs/2604.15309v1" target="_blank">Read more</a></div>
+        <div class="container">
+            <header>
+                <h1>arXiv Research Tracker</h1>
+                <div class="timestamp">Last updated: 2026-04-20 01:52:58</div>
+            </header>
+    
+            <div class="category-section">
+                <h1 class="category-title">Artificial Intelligence</h1>
+        <h2 class="section-title">Latest Updates</h2>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16224v1" target="_blank">"Taking Stock at FAccT": Using Participatory Design to Co-Create a Vision for the Fairness, Accountability and Transparency Community</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Shiran Dudy, Jan Simson, Yanan Long</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">As a relatively new forum, ACM FAccT has become a key space for activists and scholars to critically examine emerging AI and ML technologies. It brings together academics, civil society members, and government representatives from diverse fields to explore the broader societal impacts of both deployed and proposed technologies. We report a large-sc...</div>
+                    <a href="http://arxiv.org/abs/2604.16224v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15306v1" target="_blank">Generalization in LLM Problem Solving: The Case of the Shortest Path</a></h3>
-                    <div class="meta">By Yao Tong, Jiayuan Ye, Anastasia Borovykh, Reza Shokri • Published: 2026-04-16</div>
-                    <div class="summary">Whether language models can systematically generalize remains actively debated. Yet empirical performance is jointly shaped by multiple factors such as training data, training paradigms, and inference-time strategies, making failures difficult to interpret. We introduce a controlled synthetic enviro... <a href="http://arxiv.org/abs/2604.15306v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16217v1" target="_blank">Beyond Surface Statistics: Robust Conformal Prediction for LLMs via Internal Representations</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Yanli Wang, Peng Kuang, Xiaoyu Han, Kaidi Xu, Haohan Wang</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Large language models are increasingly deployed in settings where reliability matters, yet output-level uncertainty signals such as token probabilities, entropy, and self-consistency can become brittle under calibration--deployment mismatch. Conformal prediction provides finite-sample validity under exchangeability, but its practical usefulness dep...</div>
+                    <a href="http://arxiv.org/abs/2604.16217v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15302v1" target="_blank">Diagnosing LLM Judge Reliability: Conformal Prediction Sets and Transitivity Violations</a></h3>
-                    <div class="meta">By Manan Gupta, Dhruv Kumar • Published: 2026-04-16</div>
-                    <div class="summary">LLM-as-judge frameworks are increasingly used for automatic NLG evaluation, yet their per-instance reliability remains poorly understood. We present a two-pronged diagnostic toolkit applied to SummEval: $\textbf{(1)}$ a transitivity analysis that reveals widespread per-input inconsistency masked by ... <a href="http://arxiv.org/abs/2604.15302v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16207v1" target="_blank">AIFIND: Artifact-Aware Interpreting Fine-Grained Alignment for Incremental Face Forgery Detection</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Hao Wang, Beichen Zhang, Yanpei Gong, Shaoyi Fang, Zhaobo Qi, Yuanrong Xu, Xinyan Liu, Weigang Zhang</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">As forgery types continue to emerge consistently, Incremental Face Forgery Detection (IFFD) has become a crucial paradigm. However, existing methods typically rely on data replay or coarse binary supervision, which fails to explicitly constrain the feature space, leading to severe feature drift and catastrophic forgetting. To address this, we propo...</div>
+                    <a href="http://arxiv.org/abs/2604.16207v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15294v1" target="_blank">How Do LLMs and VLMs Understand Viewpoint Rotation Without Vision? An Interpretability Study</a></h3>
-                    <div class="meta">By Zhen Yang, Ping Jian, Zhongbin Guo, Zuming Zhang, Chengzhi Li, Yonghong Deng, Xinyue Zhang, Wenpeng Lu • Published: 2026-04-16</div>
-                    <div class="summary">Over the past year, spatial intelligence has drawn increasing attention. Many prior works study it from the perspective of visual-spatial intelligence, where models have access to visuospatial information from visual inputs. However, in the absence of visual information, whether linguistic intellige... <a href="http://arxiv.org/abs/2604.15294v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16205v1" target="_blank">ChemGraph-XANES: An Agentic Framework for XANES Simulation and Analysis</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Vitor F. Grizzi, Thang Duc Pham, Luke N. Pretzie, Jiayi Xu, Murat Keceli, Cong Liu</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Computational X-ray absorption near-edge structure (XANES) is widely used to probe local coordination environments, oxidation states, and electronic structure in chemically complex systems. However, the use of computational XANES at scale is constrained more by workflow complexity than by the underlying simulation method itself. To address this cha...</div>
+                    <a href="http://arxiv.org/abs/2604.16205v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15291v1" target="_blank">AD4AD: Benchmarking Visual Anomaly Detection Models for Safer Autonomous Driving</a></h3>
-                    <div class="meta">By Fabrizio Genilotti, Arianna Stropeni, Gionata Grotto, Francesco Borsatti, Manuel Barusco, Davide Dalle Pezze, Gian Antonio Susto • Published: 2026-04-16</div>
-                    <div class="summary">The reliability of a machine vision system for autonomous driving depends heavily on its training data distribution. When a vehicle encounters significantly different conditions, such as atypical obstacles, its perceptual capabilities can degrade substantially. Unlike many domains where errors carry... <a href="http://arxiv.org/abs/2604.15291v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16182v1" target="_blank">Synthetic data in cryptocurrencies using generative models</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;André Saimon S. Sousa, Otto Pires, Frank Acasiete, Oscar M. Granados, Valéria Loureiro da Silva, Hugo Saba</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Data plays a fundamental role in consolidating markets, services, and products in the digital financial ecosystem. However, the use of real data, especially in the financial context, can lead to privacy risks and access restrictions, affecting institutions, research, and modeling processes. Although not all financial datasets present such limitatio...</div>
+                    <a href="http://arxiv.org/abs/2604.16182v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
-                <h2>Key Foundational Papers</h2>
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.12104v1" target="_blank">A Deep Reinforcement Learning Approach for Ramp Metering Based on Traffic Video Data</a></h3>
-                    <div class="meta">By Bing Liu, Yu Tang, Yuxiong Ji, Yu Shen, Yuchuan Du • Published: 2020-12-09</div>
-                    <div class="summary">Ramp metering that uses traffic signals to regulate vehicle flows from the on-ramps has been widely implemented to improve vehicle mobility of the freeway. Previous studies generally update signal timings in real-time based on predefined traffic measures collected by point detectors, such as traffic... <a href="http://arxiv.org/abs/2012.12104v1" target="_blank">Read more</a></div>
-                </div>
-                
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.13026v1" target="_blank">Rethink AI-based Power Grid Control: Diving Into Algorithm Design</a></h3>
-                    <div class="meta">By Xiren Zhou, Siqi Wang, Ruisheng Diao, Desong Bian, Jiahui Duan, Di Shi • Published: 2020-12-23</div>
-                    <div class="summary">Recently, deep reinforcement learning (DRL)-based approach has shown promisein solving complex decision and control problems in power engineering domain.In this paper, we present an in-depth analysis of DRL-based voltage control fromaspects of algorithm selection, state space representation, and rew... <a href="http://arxiv.org/abs/2012.13026v1" target="_blank">Read more</a></div>
-                </div>
-                
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.13293v1" target="_blank">Fuzzy Commitments Offer Insufficient Protection to Biometric Templates Produced by Deep Learning</a></h3>
-                    <div class="meta">By Danny Keller, Margarita Osadchy, Orr Dunkelman • Published: 2020-12-24</div>
-                    <div class="summary">In this work, we study the protection that fuzzy commitments offer when they are applied to facial images, processed by the state of the art deep learning facial recognition systems. We show that while these systems are capable of producing great accuracy, they produce templates of too little entrop... <a href="http://arxiv.org/abs/2012.13293v1" target="_blank">Read more</a></div>
+                <h2 class="section-title">Key Foundational Papers</h2>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.12104v1" target="_blank">A Deep Reinforcement Learning Approach for Ramp Metering Based on Traffic Video Data</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Bing Liu, Yu Tang, Yuxiong Ji, Yu Shen, Yuchuan Du</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-09</span>
+                    </div>
+                    <div class="summary">Ramp metering that uses traffic signals to regulate vehicle flows from the on-ramps has been widely implemented to improve vehicle mobility of the freeway. Previous studies generally update signal timings in real-time based on predefined traffic measures collected by point detectors, such as traffic volumes and occupancies. Comparing with point det...</div>
+                    <a href="http://arxiv.org/abs/2012.12104v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.13315v1" target="_blank">Generalization in portfolio-based algorithm selection</a></h3>
-                    <div class="meta">By Maria-Florina Balcan, Tuomas Sandholm, Ellen Vitercik • Published: 2020-12-24</div>
-                    <div class="summary">Portfolio-based algorithm selection has seen tremendous practical success over the past two decades. This algorithm configuration procedure works by first selecting a portfolio of diverse algorithm parameter settings, and then, on a given problem instance, using an algorithm selector to choose a par... <a href="http://arxiv.org/abs/2012.13315v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.13026v1" target="_blank">Rethink AI-based Power Grid Control: Diving Into Algorithm Design</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Xiren Zhou, Siqi Wang, Ruisheng Diao, Desong Bian, Jiahui Duan, Di Shi</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-23</span>
+                    </div>
+                    <div class="summary">Recently, deep reinforcement learning (DRL)-based approach has shown promisein solving complex decision and control problems in power engineering domain.In this paper, we present an in-depth analysis of DRL-based voltage control fromaspects of algorithm selection, state space representation, and reward engineering.To resolve observed issues, we pro...</div>
+                    <a href="http://arxiv.org/abs/2012.13026v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.13391v2" target="_blank">I like fish, especially dolphins: Addressing Contradictions in Dialogue Modeling</a></h3>
-                    <div class="meta">By Yixin Nie, Mary Williamson, Mohit Bansal, Douwe Kiela, Jason Weston • Published: 2020-12-24</div>
-                    <div class="summary">To quantify how well natural language understanding models can capture consistency in a general conversation, we introduce the DialoguE COntradiction DEtection task (DECODE) and a new conversational dataset containing both human-human and human-bot contradictory dialogues. We then compare a structur... <a href="http://arxiv.org/abs/2012.13391v2" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.13293v1" target="_blank">Fuzzy Commitments Offer Insufficient Protection to Biometric Templates Produced by Deep Learning</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Danny Keller, Margarita Osadchy, Orr Dunkelman</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-24</span>
+                    </div>
+                    <div class="summary">In this work, we study the protection that fuzzy commitments offer when they are applied to facial images, processed by the state of the art deep learning facial recognition systems. We show that while these systems are capable of producing great accuracy, they produce templates of too little entropy. As a result, we present a reconstruction attack...</div>
+                    <a href="http://arxiv.org/abs/2012.13293v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.12447v1" target="_blank">Skeleton-based Approaches based on Machine Vision: A Survey</a></h3>
-                    <div class="meta">By Jie Li, Binglin Li, Min Gao • Published: 2020-12-23</div>
-                    <div class="summary">Recently, skeleton-based approaches have achieved rapid progress on the basis of great success in skeleton representation. Plenty of researches focus on solving specific problems according to skeleton features. Some skeleton-based approaches have been mentioned in several overviews on object detecti... <a href="http://arxiv.org/abs/2012.12447v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.13315v1" target="_blank">Generalization in portfolio-based algorithm selection</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Maria-Florina Balcan, Tuomas Sandholm, Ellen Vitercik</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-24</span>
+                    </div>
+                    <div class="summary">Portfolio-based algorithm selection has seen tremendous practical success over the past two decades. This algorithm configuration procedure works by first selecting a portfolio of diverse algorithm parameter settings, and then, on a given problem instance, using an algorithm selector to choose a parameter setting from the portfolio with strong pred...</div>
+                    <a href="http://arxiv.org/abs/2012.13315v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.12634v1" target="_blank">Overview of FPGA deep learning acceleration based on convolutional neural network</a></h3>
-                    <div class="meta">By Simin Liu • Published: 2020-12-23</div>
-                    <div class="summary">In recent years, deep learning has become more and more mature, and as a commonly used algorithm in deep learning, convolutional neural networks have been widely used in various visual tasks. In the past, research based on deep learning algorithms mainly relied on hardware such as GPUs and CPUs. How... <a href="http://arxiv.org/abs/2012.12634v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.13391v2" target="_blank">I like fish, especially dolphins: Addressing Contradictions in Dialogue Modeling</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Yixin Nie, Mary Williamson, Mohit Bansal, Douwe Kiela, Jason Weston</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-24</span>
+                    </div>
+                    <div class="summary">To quantify how well natural language understanding models can capture consistency in a general conversation, we introduce the DialoguE COntradiction DEtection task (DECODE) and a new conversational dataset containing both human-human and human-bot contradictory dialogues. We then compare a structured utterance-based approach of using pre-trained T...</div>
+                    <a href="http://arxiv.org/abs/2012.13391v2" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.11903v1" target="_blank">Modelling Human Routines: Conceptualising Social Practice Theory for Agent-Based Simulation</a></h3>
-                    <div class="meta">By Rijk Mercuur, Virginia Dignum, Catholijn M. Jonker • Published: 2020-12-22</div>
-                    <div class="summary">Our routines play an important role in a wide range of social challenges such as climate change, disease outbreaks and coordinating staff and patients in a hospital. To use agent-based simulations (ABS) to understand the role of routines in social challenges we need an agent framework that integrate... <a href="http://arxiv.org/abs/2012.11903v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.12447v1" target="_blank">Skeleton-based Approaches based on Machine Vision: A Survey</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Jie Li, Binglin Li, Min Gao</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-23</span>
+                    </div>
+                    <div class="summary">Recently, skeleton-based approaches have achieved rapid progress on the basis of great success in skeleton representation. Plenty of researches focus on solving specific problems according to skeleton features. Some skeleton-based approaches have been mentioned in several overviews on object detection as a non-essential part. Nevertheless, there ha...</div>
+                    <a href="http://arxiv.org/abs/2012.12447v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.13569v1" target="_blank">Dynamic-K Recommendation with Personalized Decision Boundary</a></h3>
-                    <div class="meta">By Yan Gao, Jiafeng Guo, Yanyan Lan, Huaming Liao • Published: 2020-12-25</div>
-                    <div class="summary">In this paper, we investigate the recommendation task in the most common scenario with implicit feedback (e.g., clicks, purchases). State-of-the-art methods in this direction usually cast the problem as to learn a personalized ranking on a set of items (e.g., webpages, products). The top-N results a... <a href="http://arxiv.org/abs/2012.13569v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.12634v1" target="_blank">Overview of FPGA deep learning acceleration based on convolutional neural network</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Simin Liu</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-23</span>
+                    </div>
+                    <div class="summary">In recent years, deep learning has become more and more mature, and as a commonly used algorithm in deep learning, convolutional neural networks have been widely used in various visual tasks. In the past, research based on deep learning algorithms mainly relied on hardware such as GPUs and CPUs. However, with the increasing development of FPGAs, bo...</div>
+                    <a href="http://arxiv.org/abs/2012.12634v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.12718v1" target="_blank">Compliance Generation for Privacy Documents under GDPR: A Roadmap for Implementing Automation and Machine Learning</a></h3>
-                    <div class="meta">By David Restrepo Amariles, Aurore Clément Troussel, Rajaa El Hamdani • Published: 2020-12-23</div>
-                    <div class="summary">Most prominent research today addresses compliance with data protection laws through consumer-centric and public-regulatory approaches. We shift this perspective with the Privatech project to focus on corporations and law firms as agents of compliance. To comply with data protection laws, data proce... <a href="http://arxiv.org/abs/2012.12718v1" target="_blank">Read more</a></div>
-                </div>
-                <h2>Papers from Top Authors</h2>
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.01728v1" target="_blank">The AnIML Ontology: Enabling Semantic Interoperability for Large-Scale Experimental Data in Interconnected Scientific Labs</a></h3>
-                    <div class="meta">By Wilf Morlidge, Elliott Watkiss-Leek, George Hannah, Harry Rostron, Andrew Ng, Ewan Johnson, Andrew Mitchell, Terry R. Payne, Valentina Tamma, Jacopo de Berardinis • Published: 2026-04-02</div>
-                    <div class="summary">Achieving semantic interoperability across heterogeneous experimental data systems remains a major barrier to data-driven scientific discovery. The Analytical Information Markup Language (AnIML), a flexible XML-based standard for analytical chemistry and biology, is increasingly used in industrial R... <a href="http://arxiv.org/abs/2604.01728v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.11903v1" target="_blank">Modelling Human Routines: Conceptualising Social Practice Theory for Agent-Based Simulation</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Rijk Mercuur, Virginia Dignum, Catholijn M. Jonker</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-22</span>
+                    </div>
+                    <div class="summary">Our routines play an important role in a wide range of social challenges such as climate change, disease outbreaks and coordinating staff and patients in a hospital. To use agent-based simulations (ABS) to understand the role of routines in social challenges we need an agent framework that integrates routines. This paper provides the domain-indepen...</div>
+                    <a href="http://arxiv.org/abs/2012.11903v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.01344v1" target="_blank">IDEA2: Expert-in-the-loop competency question elicitation for collaborative ontology engineering</a></h3>
-                    <div class="meta">By Elliott Watkiss-Leek, Reham Alharbi, Harry Rostron, Andrew Ng, Ewan Johnson, Andrew Mitchell, Terry R. Payne, Valentina Tamma, Jacopo de Berardinis • Published: 2026-04-01</div>
-                    <div class="summary">Competency question (CQ) elicitation represents a critical but resource-intensive bottleneck in ontology engineering. This foundational phase is often hampered by the communication gap between domain experts, who possess the necessary knowledge, and ontology engineers, who formalise it. This paper i... <a href="http://arxiv.org/abs/2604.01344v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.13569v1" target="_blank">Dynamic-K Recommendation with Personalized Decision Boundary</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Yan Gao, Jiafeng Guo, Yanyan Lan, Huaming Liao</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-25</span>
+                    </div>
+                    <div class="summary">In this paper, we investigate the recommendation task in the most common scenario with implicit feedback (e.g., clicks, purchases). State-of-the-art methods in this direction usually cast the problem as to learn a personalized ranking on a set of items (e.g., webpages, products). The top-N results are then provided to users as recommendations, wher...</div>
+                    <a href="http://arxiv.org/abs/2012.13569v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.29315v1" target="_blank">IMPASTO: Integrating Model-Based Planning with Learned Dynamics Models for Robotic Oil Painting Reproduction</a></h3>
-                    <div class="meta">By Yingke Wang, Hao Li, Yifeng Zhu, Hong-Xing Yu, Ken Goldberg, Li Fei-Fei, Jiajun Wu, Yunzhu Li, Ruohan Zhang • Published: 2026-03-31</div>
-                    <div class="summary">Robotic reproduction of oil paintings using soft brushes and pigments requires force-sensitive control of deformable tools, prediction of brushstroke effects, and multi-step stroke planning, often without human step-by-step demonstrations or faithful simulators. Given only a sequence of target oil p... <a href="http://arxiv.org/abs/2603.29315v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.12718v1" target="_blank">Compliance Generation for Privacy Documents under GDPR: A Roadmap for Implementing Automation and Machine Learning</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;David Restrepo Amariles, Aurore Clément Troussel, Rajaa El Hamdani</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-23</span>
+                    </div>
+                    <div class="summary">Most prominent research today addresses compliance with data protection laws through consumer-centric and public-regulatory approaches. We shift this perspective with the Privatech project to focus on corporations and law firms as agents of compliance. To comply with data protection laws, data processors must implement accountability measures to as...</div>
+                    <a href="http://arxiv.org/abs/2012.12718v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
+                </div>
+                <h2 class="section-title">Papers from Top Authors</h2>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.01728v1" target="_blank">The AnIML Ontology: Enabling Semantic Interoperability for Large-Scale Experimental Data in Interconnected Scientific Labs</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Wilf Morlidge, Elliott Watkiss-Leek, George Hannah, Harry Rostron, Andrew Ng, Ewan Johnson, Andrew Mitchell, Terry R. Payne, Valentina Tamma, Jacopo de Berardinis</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-02</span>
+                    </div>
+                    <div class="summary">Achieving semantic interoperability across heterogeneous experimental data systems remains a major barrier to data-driven scientific discovery. The Analytical Information Markup Language (AnIML), a flexible XML-based standard for analytical chemistry and biology, is increasingly used in industrial R&D labs for managing and exchanging experimental d...</div>
+                    <a href="http://arxiv.org/abs/2604.01728v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.22435v1" target="_blank">CaP-X: A Framework for Benchmarking and Improving Coding Agents for Robot Manipulation</a></h3>
-                    <div class="meta">By Max Fu, Justin Yu, Karim El-Refai, Ethan Kou, Haoru Xue, Huang Huang, Wenli Xiao, Guanzhi Wang, Fei-Fei Li, Guanya Shi, Jiajun Wu, Shankar Sastry, Yuke Zhu, Ken Goldberg, Linxi "Jim" Fan • Published: 2026-03-23</div>
-                    <div class="summary">"Code-as-Policy" considers how executable code can complement data-intensive Vision-Language-Action (VLA) methods, yet their effectiveness as autonomous controllers for embodied manipulation remains underexplored. We present CaP-X, an open-access framework for systematically studying Code-as-Policy ... <a href="http://arxiv.org/abs/2603.22435v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.01344v1" target="_blank">IDEA2: Expert-in-the-loop competency question elicitation for collaborative ontology engineering</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Elliott Watkiss-Leek, Reham Alharbi, Harry Rostron, Andrew Ng, Ewan Johnson, Andrew Mitchell, Terry R. Payne, Valentina Tamma, Jacopo de Berardinis</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-01</span>
+                    </div>
+                    <div class="summary">Competency question (CQ) elicitation represents a critical but resource-intensive bottleneck in ontology engineering. This foundational phase is often hampered by the communication gap between domain experts, who possess the necessary knowledge, and ontology engineers, who formalise it. This paper introduces IDEA2, a novel, semi-automated workflow ...</div>
+                    <a href="http://arxiv.org/abs/2604.01344v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.21687v3" target="_blank">MIRAGE: The Illusion of Visual Understanding</a></h3>
-                    <div class="meta">By Mohammad Asadi, Jack W. O'Sullivan, Fang Cao, Tahoura Nedaee, Kamyar Rajabalifardi, Fei-Fei Li, Ehsan Adeli, Euan Ashley • Published: 2026-03-23</div>
-                    <div class="summary">Multimodal AI systems have achieved remarkable performance across a broad range of real-world tasks, yet the mechanisms underlying visual-language reasoning remain surprisingly poorly understood. We report three findings that challenge prevailing assumptions about how these systems process and integ... <a href="http://arxiv.org/abs/2603.21687v3" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.29315v1" target="_blank">IMPASTO: Integrating Model-Based Planning with Learned Dynamics Models for Robotic Oil Painting Reproduction</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Yingke Wang, Hao Li, Yifeng Zhu, Hong-Xing Yu, Ken Goldberg, Li Fei-Fei, Jiajun Wu, Yunzhu Li, Ruohan Zhang</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-31</span>
+                    </div>
+                    <div class="summary">Robotic reproduction of oil paintings using soft brushes and pigments requires force-sensitive control of deformable tools, prediction of brushstroke effects, and multi-step stroke planning, often without human step-by-step demonstrations or faithful simulators. Given only a sequence of target oil painting images, can a robot infer and execute the ...</div>
+                    <a href="http://arxiv.org/abs/2603.29315v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.15381v1" target="_blank">Why AI systems don't learn and what to do about it: Lessons on autonomous learning from cognitive science</a></h3>
-                    <div class="meta">By Emmanuel Dupoux, Yann LeCun, Jitendra Malik • Published: 2026-03-16</div>
-                    <div class="summary">We critically examine the limitations of current AI models in achieving autonomous learning and propose a learning architecture inspired by human and animal cognition. The proposed framework integrates learning from observation (System A) and learning from active behavior (System B) while flexibly s... <a href="http://arxiv.org/abs/2603.15381v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.22435v1" target="_blank">CaP-X: A Framework for Benchmarking and Improving Coding Agents for Robot Manipulation</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Max Fu, Justin Yu, Karim El-Refai, Ethan Kou, Haoru Xue, Huang Huang, Wenli Xiao, Guanzhi Wang, Fei-Fei Li, Guanya Shi, Jiajun Wu, Shankar Sastry, Yuke Zhu, Ken Goldberg, Linxi "Jim" Fan</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-23</span>
+                    </div>
+                    <div class="summary">"Code-as-Policy" considers how executable code can complement data-intensive Vision-Language-Action (VLA) methods, yet their effectiveness as autonomous controllers for embodied manipulation remains underexplored. We present CaP-X, an open-access framework for systematically studying Code-as-Policy agents in robot manipulation. At its core is CaP-G...</div>
+                    <a href="http://arxiv.org/abs/2603.22435v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.19312v2" target="_blank">LeWorldModel: Stable End-to-End Joint-Embedding Predictive Architecture from Pixels</a></h3>
-                    <div class="meta">By Lucas Maes, Quentin Le Lidec, Damien Scieur, Yann LeCun, Randall Balestriero • Published: 2026-03-13</div>
-                    <div class="summary">Joint Embedding Predictive Architectures (JEPAs) offer a compelling framework for learning world models in compact latent spaces, yet existing methods remain fragile, relying on complex multi-term losses, exponential moving averages, pre-trained encoders, or auxiliary supervision to avoid representa... <a href="http://arxiv.org/abs/2603.19312v2" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.21687v3" target="_blank">MIRAGE: The Illusion of Visual Understanding</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Mohammad Asadi, Jack W. O'Sullivan, Fang Cao, Tahoura Nedaee, Kamyar Rajabalifardi, Fei-Fei Li, Ehsan Adeli, Euan Ashley</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-23</span>
+                    </div>
+                    <div class="summary">Multimodal AI systems have achieved remarkable performance across a broad range of real-world tasks, yet the mechanisms underlying visual-language reasoning remain surprisingly poorly understood. We report three findings that challenge prevailing assumptions about how these systems process and integrate visual information. First, Frontier models re...</div>
+                    <a href="http://arxiv.org/abs/2603.21687v3" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.05498v1" target="_blank">The Spike, the Sparse and the Sink: Anatomy of Massive Activations and Attention Sinks</a></h3>
-                    <div class="meta">By Shangwen Sun, Alfredo Canziani, Yann LeCun, Jiachen Zhu • Published: 2026-03-05</div>
-                    <div class="summary">We study two recurring phenomena in Transformer language models: massive activations, in which a small number of tokens exhibit extreme outliers in a few channels, and attention sinks, in which certain tokens attract disproportionate attention mass regardless of semantic relevance. Prior work observ... <a href="http://arxiv.org/abs/2603.05498v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.15381v1" target="_blank">Why AI systems don't learn and what to do about it: Lessons on autonomous learning from cognitive science</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Emmanuel Dupoux, Yann LeCun, Jitendra Malik</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-16</span>
+                    </div>
+                    <div class="summary">We critically examine the limitations of current AI models in achieving autonomous learning and propose a learning architecture inspired by human and animal cognition. The proposed framework integrates learning from observation (System A) and learning from active behavior (System B) while flexibly switching between these learning modes as a functio...</div>
+                    <a href="http://arxiv.org/abs/2603.15381v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.05225v1" target="_blank">AI+HW 2035: Shaping the Next Decade</a></h3>
-                    <div class="meta">By Deming Chen, Jason Cong, Azalia Mirhoseini, Christos Kozyrakis, Subhasish Mitra, Jinjun Xiong, Cliff Young, Anima Anandkumar, Michael Littman, Aron Kirschen, Sophia Shao, Serge Leef, Naresh Shanbhag, Dejan Milojicic, Michael Schulte, Gert Cauwenberghs, Jerry M. Chow, Tri Dao, Kailash Gopalakrishnan, Richard Ho, Hoshik Kim, Kunle Olukotun, David Z. Pan, Mark Ren, Dan Roth, Aarti Singh, Yizhou Sun, Yusu Wang, Yann LeCun, Ruchir Puri • Published: 2026-03-05</div>
-                    <div class="summary">Artificial intelligence (AI) and hardware (HW) are advancing at unprecedented rates, yet their trajectories have become inseparably intertwined. The global research community lacks a cohesive, long-term vision to strategically coordinate the development of AI and HW. This fragmentation constrains pr... <a href="http://arxiv.org/abs/2603.05225v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.19312v2" target="_blank">LeWorldModel: Stable End-to-End Joint-Embedding Predictive Architecture from Pixels</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Lucas Maes, Quentin Le Lidec, Damien Scieur, Yann LeCun, Randall Balestriero</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-13</span>
+                    </div>
+                    <div class="summary">Joint Embedding Predictive Architectures (JEPAs) offer a compelling framework for learning world models in compact latent spaces, yet existing methods remain fragile, relying on complex multi-term losses, exponential moving averages, pre-trained encoders, or auxiliary supervision to avoid representation collapse. In this work, we introduce LeWorldM...</div>
+                    <a href="http://arxiv.org/abs/2603.19312v2" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.01357v1" target="_blank">ASTRA-bench: Evaluating Tool-Use Agent Reasoning and Action Planning with Personal User Context</a></h3>
-                    <div class="meta">By Zidi Xiu, David Q. Sun, Kevin Cheng, Maitrik Patel, Josh Date, Yizhe Zhang, Jiarui Lu, Omar Attia, Raviteja Vemulapalli, Oncel Tuzel, Meng Cao, Samy Bengio • Published: 2026-03-02</div>
-                    <div class="summary">Next-generation AI must manage vast personal data, diverse tools, and multi-step reasoning, yet most benchmarks remain context-free and single-turn. We present ASTRA-bench (Assistant Skills in Tool-use, Reasoning \& Action-planning), a benchmark that uniquely unifies time-evolving personal context w... <a href="http://arxiv.org/abs/2603.01357v1" target="_blank">Read more</a></div>
-                </div>
-                <h1>Computer Science (General)</h1><h2>Latest Updates</h2>
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15298v1" target="_blank">Super-Constant Weight Dicke States in Constant Depth Without Fanout</a></h3>
-                    <div class="meta">By Lucas Gretta, Meghal Gupta, Malvika Raj Joshi • Published: 2026-04-16</div>
-                    <div class="summary">An $n$-qubit Dicke state of weight $k$, is the uniform superposition over all $n$-bit strings of Hamming weight $k$. Dicke states are an entanglement resource with important practical applications in the NISQ era and, for instance, play a central role in Decoded Quantum Interferometry (DQI). Further... <a href="http://arxiv.org/abs/2604.15298v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.05498v1" target="_blank">The Spike, the Sparse and the Sink: Anatomy of Massive Activations and Attention Sinks</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Shangwen Sun, Alfredo Canziani, Yann LeCun, Jiachen Zhu</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-05</span>
+                    </div>
+                    <div class="summary">We study two recurring phenomena in Transformer language models: massive activations, in which a small number of tokens exhibit extreme outliers in a few channels, and attention sinks, in which certain tokens attract disproportionate attention mass regardless of semantic relevance. Prior work observes that these phenomena frequently co-occur and of...</div>
+                    <a href="http://arxiv.org/abs/2603.05498v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15270v1" target="_blank">Enhancing Large Language Models with Retrieval Augmented Generation for Software Testing and Inspection Automation</a></h3>
-                    <div class="meta">By Zoe Fingleton, Nazanin Siavash, Armin Moin • Published: 2026-04-16</div>
-                    <div class="summary">In this paper, we focus on automating two of the widely used Verification and Validation (V&V) activities in the Software Development Lifecycle (SDLC): Software testing and software inspection (also known as review). Concerning the former, we concentrate on automated test case generation using Large... <a href="http://arxiv.org/abs/2604.15270v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.05225v1" target="_blank">AI+HW 2035: Shaping the Next Decade</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Deming Chen, Jason Cong, Azalia Mirhoseini, Christos Kozyrakis, Subhasish Mitra, Jinjun Xiong, Cliff Young, Anima Anandkumar, Michael Littman, Aron Kirschen, Sophia Shao, Serge Leef, Naresh Shanbhag, Dejan Milojicic, Michael Schulte, Gert Cauwenberghs, Jerry M. Chow, Tri Dao, Kailash Gopalakrishnan, Richard Ho, Hoshik Kim, Kunle Olukotun, David Z. Pan, Mark Ren, Dan Roth, Aarti Singh, Yizhou Sun, Yusu Wang, Yann LeCun, Ruchir Puri</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-05</span>
+                    </div>
+                    <div class="summary">Artificial intelligence (AI) and hardware (HW) are advancing at unprecedented rates, yet their trajectories have become inseparably intertwined. The global research community lacks a cohesive, long-term vision to strategically coordinate the development of AI and HW. This fragmentation constrains progress toward holistic, sustainable, and adaptive ...</div>
+                    <a href="http://arxiv.org/abs/2603.05225v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15249v1" target="_blank">Structural Dependency Analysis for Masked NTT Hardware: Scalable Pre-Silicon Verification of Post-Quantum Cryptographic Accelerators</a></h3>
-                    <div class="meta">By Ray Iskander, Khaled Kirah • Published: 2026-04-16</div>
-                    <div class="summary">Post-quantum cryptographic accelerators require side-channel resistance evidence for FIPS 140-3 certification. However, exact masking-verification tools scale only to gadgets of a few thousand cells. We present a four-stage verification hierarchy, D0/D1 structural dependency analysis, fresh-mask ref... <a href="http://arxiv.org/abs/2604.15249v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.01357v1" target="_blank">ASTRA-bench: Evaluating Tool-Use Agent Reasoning and Action Planning with Personal User Context</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Zidi Xiu, David Q. Sun, Kevin Cheng, Maitrik Patel, Josh Date, Yizhe Zhang, Jiarui Lu, Omar Attia, Raviteja Vemulapalli, Oncel Tuzel, Meng Cao, Samy Bengio</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-02</span>
+                    </div>
+                    <div class="summary">Next-generation AI must manage vast personal data, diverse tools, and multi-step reasoning, yet most benchmarks remain context-free and single-turn. We present ASTRA-bench (Assistant Skills in Tool-use, Reasoning \& Action-planning), a benchmark that uniquely unifies time-evolving personal context with an interactive toolbox and complex user intent...</div>
+                    <a href="http://arxiv.org/abs/2603.01357v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
+                </div>
+                </div>
+            <div class="category-section">
+                <h1 class="category-title">Computer Science (General)</h1>
+        <h2 class="section-title">Latest Updates</h2>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16213v1" target="_blank">Investigating Conversational Agents to Support Secondary School Students Learning CSP</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Matthew Frazier, Kostadin Damevski, Lori Pollock</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Secondary school students enrolled in the AP Computer Science Principles (CSP) course commonly utilize web resources (e.g., tutorials, Q\&A sites) to better understand key concepts in the curriculum. The primary obstacle to using these resources is finding information appropriate for the learning task and student's background. In addition to web se...</div>
+                    <a href="http://arxiv.org/abs/2604.16213v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15222v1" target="_blank">AI-Assisted Requirements Engineering: An Empirical Evaluation Relative to Expert Judgment</a></h3>
-                    <div class="meta">By Oz Levy, Ilya Dikman, Natan Levy, Michael Winokur • Published: 2026-04-16</div>
-                    <div class="summary">Artificial Intelligence is increasingly introduced into systems engineering activities, particularly within requirements engineering, where quality assessment and validation remain heavily dependent on expert judgment. While recent AI tools demonstrate promising capabilities in analyzing and generat... <a href="http://arxiv.org/abs/2604.15222v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16208v1" target="_blank">From Papers to Progress: Rethinking Knowledge Accumulation in Software Engineering</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Jason Cusati, Chris Brown</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Software engineering research has experienced rapid growth in both output and participation over the past decades. Yet concerns persist about the field's ability to accumulate, integrate, and reuse knowledge in ways that support long-term progress. To better understand how the community itself perceives these challenges, we analyze responses from t...</div>
+                    <a href="http://arxiv.org/abs/2604.16208v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15136v1" target="_blank">Feedback-Driven Execution for LLM-Based Binary Analysis</a></h3>
-                    <div class="meta">By XiangRui Zhang, Qiang Li, Haining Wang • Published: 2026-04-16</div>
-                    <div class="summary">Binary analysis increasingly relies on large language models (LLMs) to perform semantic reasoning over complex program behaviors. However, existing approaches largely adopt a one-pass execution paradigm, where reasoning operates over a fixed program representation constructed by static analysis tool... <a href="http://arxiv.org/abs/2604.15136v1" target="_blank">Read more</a></div>
-                </div>
-                <h2>Key Foundational Papers</h2>
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2508.18485v1" target="_blank">An 8- and 12-bit block AES cipher</a></h3>
-                    <div class="meta">By Peter T. Breuer • Published: 2025-08-25</div>
-                    <div class="summary">Because it is so unusual, or hard to find, or expository, a truly tiny 8- or 12-bit block AES (Rijndael) cipher is documented here, along with Java source code.... <a href="http://arxiv.org/abs/2508.18485v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16198v1" target="_blank">Bridging the Gap between User Intent and LLM: A Requirement Alignment Approach for Code Generation</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Jia Li, Ruiqi Bai, Yangkang Luo, Yiran Zhang, Wentao Yang, Zeyu Sun, Tiankuo Zhao, Dongming Jin, Lei Li, Zhi Jin</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Code generation refers to automatically producing executable programs from user requirements. Recently, researchers have explored approaches to enhance the correctness of generated code with advanced large language models. Although achieving improvements, existing approaches focus on designing reasoning strategies or post-refinement methods to enha...</div>
+                    <a href="http://arxiv.org/abs/2604.16198v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/1804.08902v2" target="_blank">Learning Software Constraints via Installation Attempts</a></h3>
-                    <div class="meta">By Ran Ben Basat, Maayan Goldstein, Itai Segall • Published: 2018-04-24</div>
-                    <div class="summary">Modern software systems are expected to be secure and contain all the latest features, even when new versions of software are released multiple times an hour. Each system may include many interacting packages. The problem of installing multiple dependent packages has been extensively studied in the ... <a href="http://arxiv.org/abs/1804.08902v2" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16149v1" target="_blank">Fast and Memory Efficient Multimodal Journey Planning with Delays</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Denys Katkalo, Andrii Rohovyi, Toby Walsh</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">State-of-the-art multimodal journey-planning algorithms, such as ULTRA, have recently been adapted to account for delays. In this work, we extend this approach to be more memory-efficient, faster, and accurate. We also adapt this framework to other state-of-the-art algorithms, like CSA and RAPTOR. We demonstrate a speedup of 1.9-4.2x over existing ...</div>
+                    <a href="http://arxiv.org/abs/2604.16149v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/1907.12383v1" target="_blank">The Operational Cost of Ethereum Airdrops</a></h3>
-                    <div class="meta">By Michael Fröwis, Rainer Böhme • Published: 2019-07-29</div>
-                    <div class="summary">Efficient transfers to many recipients present a host of issues on Ethereum. First, accounts are identified by long and incompressible constants. Second, these constants have to be stored and communicated for each payment. Third, the standard interface for token transfers does not support lists of r... <a href="http://arxiv.org/abs/1907.12383v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16128v1" target="_blank">PolicyGapper: Automated Detection of Inconsistencies Between Google Play Data Safety Sections and Privacy Policies Using LLMs</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Luca Ferrari, Billel Habbati, Meriem Guerar, Mariano Ceccato, Luca Verderame</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Mobile application developers are required to disclose how they collect, use, and share user data in compliance with privacy regulations. To support transparency, major app marketplaces have introduced standardized disclosure mechanisms. In 2022, Google mandated the Data Safety Section (DSS) on Google Play, requiring developers to summarize their d...</div>
+                    <a href="http://arxiv.org/abs/2604.16128v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
+                </div>
+                <h2 class="section-title">Key Foundational Papers</h2>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2508.18485v1" target="_blank">An 8- and 12-bit block AES cipher</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Peter T. Breuer</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2025-08-25</span>
+                    </div>
+                    <div class="summary">Because it is so unusual, or hard to find, or expository, a truly tiny 8- or 12-bit block AES (Rijndael) cipher is documented here, along with Java source code....</div>
+                    <a href="http://arxiv.org/abs/2508.18485v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/1904.12068v3" target="_blank">Authenticated Key-Value Stores with Hardware Enclaves</a></h3>
-                    <div class="meta">By Yuzhe Tang, Ju Chen, Kai Li, Jianliang Xu, Qi Zhang • Published: 2019-04-26</div>
-                    <div class="summary">Authenticated data storage on an untrusted platform is an important computing paradigm for cloud applications ranging from big-data outsourcing, to cryptocurrency and certificate transparency log. These modern applications increasingly feature update-intensive workloads, whereas existing authenticat... <a href="http://arxiv.org/abs/1904.12068v3" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/1804.08902v2" target="_blank">Learning Software Constraints via Installation Attempts</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Ran Ben Basat, Maayan Goldstein, Itai Segall</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2018-04-24</span>
+                    </div>
+                    <div class="summary">Modern software systems are expected to be secure and contain all the latest features, even when new versions of software are released multiple times an hour. Each system may include many interacting packages. The problem of installing multiple dependent packages has been extensively studied in the past, yielding some promising solutions that work ...</div>
+                    <a href="http://arxiv.org/abs/1804.08902v2" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2005.13206v2" target="_blank">A Security Policy Model Transformation and Verification Approach for Software Defined Networking</a></h3>
-                    <div class="meta">By Yunfei Meng, Zhiqiu Huang, Guohua Shen, Changbo Ke • Published: 2020-05-27</div>
-                    <div class="summary">Software defined networking (SDN) has been adopted to enforce the security of large-scale and complex networks because of its programmable, abstract, centralized intelligent control and global and real-time traffic view. However, the current SDN-based security enforcement mechanisms require network ... <a href="http://arxiv.org/abs/2005.13206v2" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/1907.12383v1" target="_blank">The Operational Cost of Ethereum Airdrops</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Michael Fröwis, Rainer Böhme</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2019-07-29</span>
+                    </div>
+                    <div class="summary">Efficient transfers to many recipients present a host of issues on Ethereum. First, accounts are identified by long and incompressible constants. Second, these constants have to be stored and communicated for each payment. Third, the standard interface for token transfers does not support lists of recipients, adding repeated communication to the ov...</div>
+                    <a href="http://arxiv.org/abs/1907.12383v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2008.01725v2" target="_blank">A Large Scale Analysis of Android-Web Hybridization</a></h3>
-                    <div class="meta">By Abhishek Tiwari, Jyoti Prakash, Sascha Gross, Christian Hammer • Published: 2020-08-04</div>
-                    <div class="summary">Many Android applications embed webpages via WebView components and execute JavaScript code within Android. Hybrid applications leverage dedicated APIs to load a resource and render it in a WebView. Furthermore, Android objects can be shared with the JavaScript world. However, bridging the interface... <a href="http://arxiv.org/abs/2008.01725v2" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/1904.12068v3" target="_blank">Authenticated Key-Value Stores with Hardware Enclaves</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Yuzhe Tang, Ju Chen, Kai Li, Jianliang Xu, Qi Zhang</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2019-04-26</span>
+                    </div>
+                    <div class="summary">Authenticated data storage on an untrusted platform is an important computing paradigm for cloud applications ranging from big-data outsourcing, to cryptocurrency and certificate transparency log. These modern applications increasingly feature update-intensive workloads, whereas existing authenticated data structures (ADSs) designed with in-place u...</div>
+                    <a href="http://arxiv.org/abs/1904.12068v3" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2008.05895v1" target="_blank">Can We Trust Your Explanations? Sanity Checks for Interpreters in Android Malware Analysis</a></h3>
-                    <div class="meta">By Ming Fan, Wenying Wei, Xiaofei Xie, Yang Liu, Xiaohong Guan, Ting Liu • Published: 2020-08-13</div>
-                    <div class="summary">With the rapid growth of Android malware, many machine learning-based malware analysis approaches are proposed to mitigate the severe phenomenon. However, such classifiers are opaque, non-intuitive, and difficult for analysts to understand the inner decision reason. For this reason, a variety of exp... <a href="http://arxiv.org/abs/2008.05895v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2005.13206v2" target="_blank">A Security Policy Model Transformation and Verification Approach for Software Defined Networking</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Yunfei Meng, Zhiqiu Huang, Guohua Shen, Changbo Ke</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-05-27</span>
+                    </div>
+                    <div class="summary">Software defined networking (SDN) has been adopted to enforce the security of large-scale and complex networks because of its programmable, abstract, centralized intelligent control and global and real-time traffic view. However, the current SDN-based security enforcement mechanisms require network managers to fully understand the underlying config...</div>
+                    <a href="http://arxiv.org/abs/2005.13206v2" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2011.00164v1" target="_blank">Differentially Private ADMM Algorithms for Machine Learning</a></h3>
-                    <div class="meta">By Tao Xu, Fanhua Shang, Yuanyuan Liu, Hongying Liu, Longjie Shen, Maoguo Gong • Published: 2020-10-31</div>
-                    <div class="summary">In this paper, we study efficient differentially private alternating direction methods of multipliers (ADMM) via gradient perturbation for many machine learning problems. For smooth convex loss functions with (non)-smooth regularization, we propose the first differentially private ADMM (DP-ADMM) alg... <a href="http://arxiv.org/abs/2011.00164v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2008.01725v2" target="_blank">A Large Scale Analysis of Android-Web Hybridization</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Abhishek Tiwari, Jyoti Prakash, Sascha Gross, Christian Hammer</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-08-04</span>
+                    </div>
+                    <div class="summary">Many Android applications embed webpages via WebView components and execute JavaScript code within Android. Hybrid applications leverage dedicated APIs to load a resource and render it in a WebView. Furthermore, Android objects can be shared with the JavaScript world. However, bridging the interfaces of the Android and JavaScript world might also i...</div>
+                    <a href="http://arxiv.org/abs/2008.01725v2" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2009.13689v1" target="_blank">Oblivious Sampling Algorithms for Private Data Analysis</a></h3>
-                    <div class="meta">By Sajin Sasy, Olga Ohrimenko • Published: 2020-09-28</div>
-                    <div class="summary">We study secure and privacy-preserving data analysis based on queries executed on samples from a dataset. Trusted execution environments (TEEs) can be used to protect the content of the data during query computation, while supporting differential-private (DP) queries in TEEs provides record privacy ... <a href="http://arxiv.org/abs/2009.13689v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2008.05895v1" target="_blank">Can We Trust Your Explanations? Sanity Checks for Interpreters in Android Malware Analysis</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Ming Fan, Wenying Wei, Xiaofei Xie, Yang Liu, Xiaohong Guan, Ting Liu</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-08-13</span>
+                    </div>
+                    <div class="summary">With the rapid growth of Android malware, many machine learning-based malware analysis approaches are proposed to mitigate the severe phenomenon. However, such classifiers are opaque, non-intuitive, and difficult for analysts to understand the inner decision reason. For this reason, a variety of explanation approaches are proposed to interpret pred...</div>
+                    <a href="http://arxiv.org/abs/2008.05895v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2009.13250v1" target="_blank">Advancing the Research and Development of Assured Artificial Intelligence and Machine Learning Capabilities</a></h3>
-                    <div class="meta">By Tyler J. Shipp, Daniel J. Clouse, Michael J. De Lucia, Metin B. Ahiskali, Kai Steverson, Jonathan M. Mullin, Nathaniel D. Bastian • Published: 2020-09-24</div>
-                    <div class="summary">Artificial intelligence (AI) and machine learning (ML) have become increasingly vital in the development of novel defense and intelligence capabilities across all domains of warfare. An adversarial AI (A2I) and adversarial ML (AML) attack seeks to deceive and manipulate AI/ML models. It is imperativ... <a href="http://arxiv.org/abs/2009.13250v1" target="_blank">Read more</a></div>
-                </div>
-                <h1>Quantum Physics</h1><h2>Latest Updates</h2>
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15307v1" target="_blank">Heuristic Search for Minimum-Distance Upper-Bound Witnesses in Quantum APM-LDPC Codes</a></h3>
-                    <div class="meta">By Kenta Kasai • Published: 2026-04-16</div>
-                    <div class="summary">This paper investigates certified upper bounds on the minimum distance of an explicit family of Calderbank-Shor-Steane quantum LDPC codes constructed from affine permutation matrices. All codes considered here have active Tanner graphs of girth eight. Rather than attempting to prove a general lower ... <a href="http://arxiv.org/abs/2604.15307v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2011.00164v1" target="_blank">Differentially Private ADMM Algorithms for Machine Learning</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Tao Xu, Fanhua Shang, Yuanyuan Liu, Hongying Liu, Longjie Shen, Maoguo Gong</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-10-31</span>
+                    </div>
+                    <div class="summary">In this paper, we study efficient differentially private alternating direction methods of multipliers (ADMM) via gradient perturbation for many machine learning problems. For smooth convex loss functions with (non)-smooth regularization, we propose the first differentially private ADMM (DP-ADMM) algorithm with performance guarantee of $(ε,δ)$-diffe...</div>
+                    <a href="http://arxiv.org/abs/2011.00164v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15300v1" target="_blank">Ensembles of random quantum states tunable from volume law to area law</a></h3>
-                    <div class="meta">By Héloïse Albot, Sebastian Paeckel • Published: 2026-04-16</div>
-                    <div class="summary">A standard approach to generate random pure quantum states relies on sampling from the Haar measure. However, the entanglement properties of such states present a fundamental challenge for their general applicability. Here, we introduce the $σ$-ensembles $\unicode{x2013}$ a family of random quantum ... <a href="http://arxiv.org/abs/2604.15300v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2009.13689v1" target="_blank">Oblivious Sampling Algorithms for Private Data Analysis</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Sajin Sasy, Olga Ohrimenko</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-09-28</span>
+                    </div>
+                    <div class="summary">We study secure and privacy-preserving data analysis based on queries executed on samples from a dataset. Trusted execution environments (TEEs) can be used to protect the content of the data during query computation, while supporting differential-private (DP) queries in TEEs provides record privacy when query output is revealed. Support for sample-...</div>
+                    <a href="http://arxiv.org/abs/2009.13689v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15298v1" target="_blank">Super-Constant Weight Dicke States in Constant Depth Without Fanout</a></h3>
-                    <div class="meta">By Lucas Gretta, Meghal Gupta, Malvika Raj Joshi • Published: 2026-04-16</div>
-                    <div class="summary">An $n$-qubit Dicke state of weight $k$, is the uniform superposition over all $n$-bit strings of Hamming weight $k$. Dicke states are an entanglement resource with important practical applications in the NISQ era and, for instance, play a central role in Decoded Quantum Interferometry (DQI). Further... <a href="http://arxiv.org/abs/2604.15298v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2009.13250v1" target="_blank">Advancing the Research and Development of Assured Artificial Intelligence and Machine Learning Capabilities</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Tyler J. Shipp, Daniel J. Clouse, Michael J. De Lucia, Metin B. Ahiskali, Kai Steverson, Jonathan M. Mullin, Nathaniel D. Bastian</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-09-24</span>
+                    </div>
+                    <div class="summary">Artificial intelligence (AI) and machine learning (ML) have become increasingly vital in the development of novel defense and intelligence capabilities across all domains of warfare. An adversarial AI (A2I) and adversarial ML (AML) attack seeks to deceive and manipulate AI/ML models. It is imperative that AI/ML models can defend against these attac...</div>
+                    <a href="http://arxiv.org/abs/2009.13250v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
+                </div>
+                </div>
+            <div class="category-section">
+                <h1 class="category-title">Quantum Physics</h1>
+        <h2 class="section-title">Latest Updates</h2>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16218v1" target="_blank">Quantum Tomography and Entanglement in Semi-Leptonic $h\to VV^*$ Decays at Higher Orders</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Dorival Gonçalves, Ajay Kaladharan, Alberto Navarro</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Angular correlations in Higgs decays to electroweak gauge bosons, $h \to ZZ^*, WW^*$, provide a powerful probe of both new physics effects and quantum information observables. We present a systematic study of semi-leptonic decays $h \to V V^* \to \ell^+\ell^- q\bar{q}$ and $\ell^\pm ν_\ell q\bar{q}'$, including finite final state fermion masses, NL...</div>
+                    <a href="http://arxiv.org/abs/2604.16218v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15275v1" target="_blank">Generation of Schrödinger cat-like states via degenerate dual pump spontaneous four-wave mixing in a $χ^{(3)}$ microring resonator</a></h3>
-                    <div class="meta">By Ranjit Singh, Alexander E. Teretenkov • Published: 2026-04-16</div>
-                    <div class="summary">We theoretically investigate the generation of non-Gaussian quantum states, specifically Schrödinger cat-like states (SCLSs), via degenerate dual-pump spontaneous four-wave mixing in a $χ^{(3)}$-based microring resonator. By introducing a unitary transformation that exactly decouples the self-phase ... <a href="http://arxiv.org/abs/2604.15275v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16216v1" target="_blank">A digitally controlled silicon quantum processing unit</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp; Members of the HRL Quantum Team,  Collaborators,  :, Michael Abraham, Edwin Acuna, Tower S. Adams, Moonmoon Akmal, Matthew R. Alfaro, I. Alvarado, Jacob Amontree, Carter Andrews, Reed W. Andrews, Michael Antcliffe, Andre R. Aséncio, Ryan M. Avila Batres, Cynthia D. Baringer, David W. Barnes, Katherine M. Beech, Russell G. Blakey, Zachery T. Bloom, Aaron J. Bluestone, Jacob Z. Blumoff, Matthew G. Borselli, Koel A. Bose, Brydon Boyd, Jacob T. Boyer, Teresa L. Brecht, Christopher C. Brough, Rex A. Brown, Steven L. Brown, Tyler A. Cain, John B. Carpenter, Stephen Carr, Faustin W. Carter, Mitchell Casanova, Jacob L. Chambers, Matthew D. Chambers, Khamsorn L. Chanthavong, James M. Chappell, Rhian Chavez, Kevin C. Chen, Peter S. Chen, Maxwell D. Choi, Krishna Choudhary, Matthew N. H. Chow, Justin E. Christensen, Aaron M. Chronister, Andrew M. Clapper, Abigail A. Coker, Michael D. Cornelius, Albert E. Cosand, Ian T. Counts, Edward T. Croke, Gregory M. Crosswhite, Erik S. Daniel, Tuan A. Dao, Dominic Daprano, Tiffany Davis, Neha Deshpande, Rachel S. Dey, D. Scott Diamond, Claire E. Dickerson, J. P. Dodson, James B. Dragan, Marc Dvorak, Lisa F. Edge, Charles R. Elliott, Kenneth R. Elliott, Kevin Eng, Jacob Fast, Colin P. Feeney, David J. Fialkow, Dylan H. Finestone, Micha N. Fireman, Bryan H. Fong, Trevor M. Fowler, Sean Frazier, Kiera L. Fuller, Christina A. C. Garcia, Kacy L. Garstka, Kara C. Garvey, Zachary A. Geiger, Galen R. Gledhill, Caleigh M. Goodwin-Schoen, Joseph L. Goralka, Bradley W. Greene, Hrayr K. Gurgenian, Sieu D. Ha, Wonill Ha, Nathanial R. Hapeman, Brooke M. Hardesty, Jim W. Harrington, Patrick M. Harrington, Thomas R. B. Harris, Ben M. Harrison, Anthony T. Hatke, Robert R. Hayes, Kevin He, Raul Hernandez Garcia, Ryan M. Hickey, Jocelyn Hicks-Garner, Alex Hirman, Donald A. Hitko, David Ho, Holland Y. Ho, Vinh S. Ho, nathan holman, Adam Holmes, Nerys Huffman, Daniel R. Hulbert, Eric B. Isaacs, Clayton A. C. Jackson, Logan Jaeger, Ian Jenkins, Cameron Jennings, Paul C. Jerger, B. Johnson, Aaron M. Jones, Michael P. Jura, Adour V. Kabakian, Raj M. Katti, Tyler Keating, Joseph Kerckhoff, Joseph D. Kern, Isaac Khalaf, Aditya Kher, Jake J. Kim, Erich W. Kinder, Andrey A. Kiselev, William F. Koehl, Patrick W. Krantz, Thaddeus D. Ladd, Pierce G. Laing, Sanaaya Lakdawala, Nathan J. Lang, Robert Lanza, Elias Lawson-Fox, Dustin Le, Kangmu Lee, Nathan R. A. Lee, Jaime Lerma, Mark P. Levendorf, Alwina R. Liu, Henry Lizarraga, Aurelio Lopez, Hoa C. Ly, Torrey T. Lyons, Theodore K. Macioce, Matthew M. Mackey, John K. Maeda, Ryan M. Martin, Daniel S. Matic, Justine W. Matten, Gavin C. Mazur, Max S. McCready, Olivia Means, Kevin E. Millner, Ivan Milosavljevic, Matthew Morris, Susan L. Morton, Samuel Mumford, Bryce D. Murley, Robert G. Nagele, Taro A. Naoi, Cameron R. Nelson, Georgia A. Newman, David B. Nguyen, Tina Niknejad, Rebecca N. Nishide, Liam C. O'Brien, Colin B. E. O'Keefe, Riley P. O'Neil, Andrew E. Oriani, Anthony F. Ortiz, John J. Ottusch, Andrew Pan, Pamela R. Patterson, Uttam Paudel, Julius C. Perez, Christi A. Peterson, Vu T. Phan, Nickolas H. Pilgram, Clifford E. Plesha, Winston Pouse, Eric M. Prophet, Daniel R. Queen, Nicholas Quirk, Kate Raach, Matthew T. Rakher, Matthew D. Reed, Brandon D. Reynolds, Zechariah Rogers, Yakov Royter, Matthew J. Ruiz, Golam Sabbir, Roshan Sajjad, Christopher D. Sanborn, Rachel H. Sarmiento, Christian J. Schnaible, Cole Scott, Nicholas M. Sebastiani, Eric M. Segall, Adalberto Sicairos, Shariq Siddiqui, Kartik Singh, Aaron Smith, Daniel E. Smith, Robert S. Smith, Sarah F. Sontag, Emilio A. Sovero, Kevin C. Staley, Andrea Su, June Suh, Bo Sun, Danny Sun, Christopher M. Swank, Noah Swimmer, Mariano J. Taboada, Bryan J. Thomas, Yessica Torres, Jeremy W. Touve, Alan Tran, Ivan Tran, Chantang Tsen, Skylar Turner, Miguel Valencia, Irma Valles, James R. van Meter, Nicholas D. VanRensselaer, Franklin Vartanian, Daniel Volya, Zachary J. Vrba, Phuong Hong Vu, Annette L. Wagner, John Wallner, Michael P. Walsh, Shuoqin Wang, Tong Wang, Daniel R. Ward, Aaron J. Weinstein, Terry B. Welch, Thomas V. Westrick, Evan T. White, Randall M. White, Samuel J. Whiteley, Gananath Wijeratne, Parker Williams, Jack T. Wilson, Courtney P. Wilt, Deborah E. Winklea, Onnik Yaglioglu, Daniel Yap, Clifford S. YoungSciortino, Daniel Zehnder, Andrew Ziegler</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Commercially-relevant quantum computers will require large numbers of high-performing qubits that can be manufactured, integrated, and controlled at scale. Silicon exchange-only (EO) qubits are a strong candidate modality due to their control-signal simplicity and compatibility with advanced semiconductor manufacturing, but questions remain around ...</div>
+                    <a href="http://arxiv.org/abs/2604.16216v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.15273v1" target="_blank">How Embeddings Shape Graph Neural Networks: Classical vs Quantum-Oriented Node Representations</a></h3>
-                    <div class="meta">By Nouhaila Innan, Antonello Rosato, Alberto Marchisio, Muhammad Shafique • Published: 2026-04-16</div>
-                    <div class="summary">Node embeddings act as the information interface for graph neural networks, yet their empirical impact is often reported under mismatched backbones, splits, and training budgets. This paper provides a controlled benchmark of embedding choices for graph classification, comparing classical baselines w... <a href="http://arxiv.org/abs/2604.15273v1" target="_blank">Read more</a></div>
-                </div>
-                <h2>Key Foundational Papers</h2>
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.12321v1" target="_blank">Quantum Request-Answer Game with Buffer Model for Online Algorithms</a></h3>
-                    <div class="meta">By Kamil Khadiev • Published: 2020-12-22</div>
-                    <div class="summary">We consider online algorithms as a request-answer game. An adversary that generates input requests, and an online algorithm answers. We consider a generalized version of the game that has a buffer of limited size. The adversary loads data to the buffer, and the algorithm has random access to element... <a href="http://arxiv.org/abs/2012.12321v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16210v1" target="_blank">Preparation and detection of quasiparticles for quantum simulations of scattering</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Mattia Morgavi, Peter Majcen, Marco Rigobello, Simone Montangero, Pietro Silvi</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">We introduce a method for the selective preparation and detection of quasiparticle wave packets, based on creation operators that generate dressed, localized excitations on top of interacting vacua of (quasi-)one-dimensional quantum lattice theories. This method exploits maximally localized Wannier functions (MLWFs) constructed from quasiparticle b...</div>
+                    <a href="http://arxiv.org/abs/2604.16210v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.12508v1" target="_blank">Maximising Dynamic Nuclear Polarisation via Selective Hyperfine Tuning</a></h3>
-                    <div class="meta">By L. T. Hall, D. A. Broadway, A. Stacey, D. A. Simpson, J-P. Tetienne, L. C. L. Hollenberg • Published: 2020-12-23</div>
-                    <div class="summary">Dynamic nuclear polarisation (DNP) refers to a class of techniques used to increase the signal in nuclear magnetic resonance measurements by transferring spin polarisation from ensembles of highly polarised electrons to target nuclear analytes. These techniques, however, require the application of s... <a href="http://arxiv.org/abs/2012.12508v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16209v1" target="_blank">Towards Ultra-High-Rate Quantum Error Correction with Reconfigurable Atom Arrays</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Chen Zhao, Casey Duckering, Andi Gu, Nishad Maskara, Hengyun Zhou</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Quantum error correction is widely believed to be essential for large-scale quantum computation, but the required qubit overhead remains a central challenge. Quantum low-density parity-check codes can substantially reduce this overhead through high-rate encodings, yet finite-size instances with practical logical error rates often achieve encoding r...</div>
+                    <a href="http://arxiv.org/abs/2604.16209v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.11716v1" target="_blank">Analytical Solutions of the Schrodinger Equation for Hua Potential within the Framework of two Approximations Scheme</a></h3>
-                    <div class="meta">By C. M. Ekpo, E. B. Ettah • Published: 2020-12-18</div>
-                    <div class="summary">In this paper, we solve analytically the Schrodinger equation for s-wave and arbitrary angular momenta with the Hua potential is investigated respectively. The wave function as well as energy equation are obtained in an exact analytical manner via the Nikiforov Uvarov method using two approximations... <a href="http://arxiv.org/abs/2012.11716v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.16202v1" target="_blank">Squeezing and measurement of a mechanical quadrature via PID feedback</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Alberto Hijano, Tero T. Heikkilä</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-17</span>
+                    </div>
+                    <div class="summary">Proportional-Integral-Derivative (PID) control is used for automatically regulating a measurable quantity to a desired setpoint. It is widely used in different types of classical control electronics. Here, we show how extending the feedback theory in quantum systems to include the derivative and integral parts influences both the transient and stea...</div>
+                    <a href="http://arxiv.org/abs/2604.16202v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
+                </div>
+                <h2 class="section-title">Key Foundational Papers</h2>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.12321v1" target="_blank">Quantum Request-Answer Game with Buffer Model for Online Algorithms</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Kamil Khadiev</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-22</span>
+                    </div>
+                    <div class="summary">We consider online algorithms as a request-answer game. An adversary that generates input requests, and an online algorithm answers. We consider a generalized version of the game that has a buffer of limited size. The adversary loads data to the buffer, and the algorithm has random access to elements of the buffer. We consider quantum and classical...</div>
+                    <a href="http://arxiv.org/abs/2012.12321v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.11874v1" target="_blank">Comment on 'Semi-Quantum Private Comparison Based on Bell States'</a></h3>
-                    <div class="meta">By You-Lin Chen, Yu-Chin Lu, Zhong-Xuan Lin, Tzonelih Hwang • Published: 2020-12-22</div>
-                    <div class="summary">This study points out a semi-quantum protocol for private comparison using Bell states (SQPC) suffering from the double C-NOT attack and the malicious agent attack. The attacker can easily obtain information through these attacks. An improved protocol is proposed, which can effectively resist both o... <a href="http://arxiv.org/abs/2012.11874v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.12508v1" target="_blank">Maximising Dynamic Nuclear Polarisation via Selective Hyperfine Tuning</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;L. T. Hall, D. A. Broadway, A. Stacey, D. A. Simpson, J-P. Tetienne, L. C. L. Hollenberg</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-23</span>
+                    </div>
+                    <div class="summary">Dynamic nuclear polarisation (DNP) refers to a class of techniques used to increase the signal in nuclear magnetic resonance measurements by transferring spin polarisation from ensembles of highly polarised electrons to target nuclear analytes. These techniques, however, require the application of strong magnetic fields to maximise electron spin po...</div>
+                    <a href="http://arxiv.org/abs/2012.12508v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.13845v1" target="_blank">Discrimination of symmetric states in operational probabilistic theory</a></h3>
-                    <div class="meta">By Kenji Nakahira • Published: 2020-12-27</div>
-                    <div class="summary">A state discrimination problem in an operational probabilistic theory (OPT) is investigated in diagrammatic terms. It is well-known that, in the case of quantum theory, if a state set has a certain symmetry, then there exists a minimum-error measurement having the same type of symmetry. However, to ... <a href="http://arxiv.org/abs/2012.13845v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.11716v1" target="_blank">Analytical Solutions of the Schrodinger Equation for Hua Potential within the Framework of two Approximations Scheme</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;C. M. Ekpo, E. B. Ettah</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-18</span>
+                    </div>
+                    <div class="summary">In this paper, we solve analytically the Schrodinger equation for s-wave and arbitrary angular momenta with the Hua potential is investigated respectively. The wave function as well as energy equation are obtained in an exact analytical manner via the Nikiforov Uvarov method using two approximations scheme. Some special cases of this potentials are...</div>
+                    <a href="http://arxiv.org/abs/2012.11716v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2012.13969v1" target="_blank">Electromagnetically Induced Transparencies with Two Transverse Bose-Einstein Condensates in a Four-Mirror Cavity</a></h3>
-                    <div class="meta">By Kashif Ammar Yasir, Zhaoxin Liang, Gao Xianlong, Wu-Ming Liu • Published: 2020-12-27</div>
-                    <div class="summary">We investigate electromagnetically induced transparencies with two transverse Bose-Einstein condensates in four-mirror optical cavity, driven by a strong pump laser and a weak probe laser. The cavity mode, after getting split from beam splitter, interacts with two independent Bose-Einstein Condensat... <a href="http://arxiv.org/abs/2012.13969v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.11874v1" target="_blank">Comment on 'Semi-Quantum Private Comparison Based on Bell States'</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;You-Lin Chen, Yu-Chin Lu, Zhong-Xuan Lin, Tzonelih Hwang</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-22</span>
+                    </div>
+                    <div class="summary">This study points out a semi-quantum protocol for private comparison using Bell states (SQPC) suffering from the double C-NOT attack and the malicious agent attack. The attacker can easily obtain information through these attacks. An improved protocol is proposed, which can effectively resist both of these attacks....</div>
+                    <a href="http://arxiv.org/abs/2012.11874v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/1904.07945v3" target="_blank">Entanglement preserving local thermalization</a></h3>
-                    <div class="meta">By Chung-Yun Hsieh, Matteo Lostaglio, Antonio Acín • Published: 2019-04-16</div>
-                    <div class="summary">We investigate whether entanglement can survive the thermalization of subsystems. We present two equivalent formulations of this problem: (1) Can two isolated agents, accessing only pre-shared randomness, locally thermalize arbitrary input states while maintaining some entanglement? (2) Can thermali... <a href="http://arxiv.org/abs/1904.07945v3" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.13845v1" target="_blank">Discrimination of symmetric states in operational probabilistic theory</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Kenji Nakahira</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-27</span>
+                    </div>
+                    <div class="summary">A state discrimination problem in an operational probabilistic theory (OPT) is investigated in diagrammatic terms. It is well-known that, in the case of quantum theory, if a state set has a certain symmetry, then there exists a minimum-error measurement having the same type of symmetry. However, to our knowledge, it is not yet clear whether this pr...</div>
+                    <a href="http://arxiv.org/abs/2012.13845v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/1905.00088v2" target="_blank">Ballistic transport and boundary resistances in inhomogeneous quantum spin chains</a></h3>
-                    <div class="meta">By Alberto Biella, Mario Collura, Davide Rossini, Andrea De Luca, Leonardo Mazza • Published: 2019-04-30</div>
-                    <div class="summary">Transport phenomena are central to physics, and transport in the many-body and fully-quantum regime is attracting an increasing amount of attention. It has been recently revealed that some quantum spin chains support ballistic transport of excitations at all energies. However, when joining two semi-... <a href="http://arxiv.org/abs/1905.00088v2" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2012.13969v1" target="_blank">Electromagnetically Induced Transparencies with Two Transverse Bose-Einstein Condensates in a Four-Mirror Cavity</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Kashif Ammar Yasir, Zhaoxin Liang, Gao Xianlong, Wu-Ming Liu</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2020-12-27</span>
+                    </div>
+                    <div class="summary">We investigate electromagnetically induced transparencies with two transverse Bose-Einstein condensates in four-mirror optical cavity, driven by a strong pump laser and a weak probe laser. The cavity mode, after getting split from beam splitter, interacts with two independent Bose-Einstein Condensates transversely trapped in the arms of the cavity ...</div>
+                    <a href="http://arxiv.org/abs/2012.13969v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/1905.00090v1" target="_blank">Explicit derivation of the Pauli spin matrices from the Jones vector</a></h3>
-                    <div class="meta">By Jairo Alonso Mendoza Suárez, Hernando Gonzalez Sierra, Francis Segovia-Chaves • Published: 2019-04-27</div>
-                    <div class="summary">Using dyadic representations elaborated from vectors of Jones, and calculating relations of anti-commutation of these tensorial forms, we obtain in shape explicit the Pauli spin matrices.... <a href="http://arxiv.org/abs/1905.00090v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/1904.07945v3" target="_blank">Entanglement preserving local thermalization</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Chung-Yun Hsieh, Matteo Lostaglio, Antonio Acín</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2019-04-16</span>
+                    </div>
+                    <div class="summary">We investigate whether entanglement can survive the thermalization of subsystems. We present two equivalent formulations of this problem: (1) Can two isolated agents, accessing only pre-shared randomness, locally thermalize arbitrary input states while maintaining some entanglement? (2) Can thermalization with local heat baths, which may be classic...</div>
+                    <a href="http://arxiv.org/abs/1904.07945v3" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/1905.00275v1" target="_blank">Coherently driving a single quantum two-level system with dichromatic laser pulses</a></h3>
-                    <div class="meta">By Yu-Ming He, Hui Wang, Can Wang, Ming-Cheng Chen, Xing Ding, Jian Qin, Zhao-Chen Duan, Si Chen, Jin-Peng Li, Run-Ze Liu, Christian Schneider, Mete Atature, Sven Hoefling, Chao-Yang Lu, Jian-Wei Pan • Published: 2019-05-01</div>
-                    <div class="summary">Efficient excitation of a single two-level system usually requires that the driving field is at the same frequency as the atomic transition. However, the scattered laser light in solid-state implementations can dominate over the single photons, imposing an outstanding challenge to perfect single-pho... <a href="http://arxiv.org/abs/1905.00275v1" target="_blank">Read more</a></div>
-                </div>
-                <h2>Papers from Top Authors</h2>
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.11952v1" target="_blank">A Relativizing MIP for BQP</a></h3>
-                    <div class="meta">By Scott Aaronson, Anand Natarajan, Avishay Tal, Agi Villanyi • Published: 2026-04-13</div>
-                    <div class="summary">Complexity class containments involving interactive proof classes are famously nonrelativizing: although $\mathsf{IP} = \mathsf{PSPACE}$, Fortnow and Sipser showed that that there exists an oracle relative to which $\mathsf{coNP} \not\subseteq \mathsf{IP}$. In contrast, the question of whether the c... <a href="http://arxiv.org/abs/2604.11952v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/1905.00088v2" target="_blank">Ballistic transport and boundary resistances in inhomogeneous quantum spin chains</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Alberto Biella, Mario Collura, Davide Rossini, Andrea De Luca, Leonardo Mazza</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2019-04-30</span>
+                    </div>
+                    <div class="summary">Transport phenomena are central to physics, and transport in the many-body and fully-quantum regime is attracting an increasing amount of attention. It has been recently revealed that some quantum spin chains support ballistic transport of excitations at all energies. However, when joining two semi-infinite ballistic parts, such as the XX and XXZ s...</div>
+                    <a href="http://arxiv.org/abs/1905.00088v2" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2604.07639v1" target="_blank">Exponential quantum advantage in processing massive classical data</a></h3>
-                    <div class="meta">By Haimeng Zhao, Alexander Zlokapa, Hartmut Neven, Ryan Babbush, John Preskill, Jarrod R. McClean, Hsin-Yuan Huang • Published: 2026-04-08</div>
-                    <div class="summary">Broadly applicable quantum advantage, particularly in classical data processing and machine learning, has been a fundamental open problem. In this work, we prove that a small quantum computer of polylogarithmic size can perform large-scale classification and dimension reduction on massive classical ... <a href="http://arxiv.org/abs/2604.07639v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/1905.00090v1" target="_blank">Explicit derivation of the Pauli spin matrices from the Jones vector</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Jairo Alonso Mendoza Suárez, Hernando Gonzalez Sierra, Francis Segovia-Chaves</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2019-04-27</span>
+                    </div>
+                    <div class="summary">Using dyadic representations elaborated from vectors of Jones, and calculating relations of anti-commutation of these tensorial forms, we obtain in shape explicit the Pauli spin matrices....</div>
+                    <a href="http://arxiv.org/abs/1905.00090v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.28627v1" target="_blank">Shor's algorithm is possible with as few as 10,000 reconfigurable atomic qubits</a></h3>
-                    <div class="meta">By Madelyn Cain, Qian Xu, Robbie King, Lewis R. B. Picard, Harry Levine, Manuel Endres, John Preskill, Hsin-Yuan Huang, Dolev Bluvstein • Published: 2026-03-30</div>
-                    <div class="summary">Quantum computers have the potential to perform computational tasks beyond the reach of classical machines. A prominent example is Shor's algorithm for integer factorization and discrete logarithms, which is of both fundamental importance and practical relevance to cryptography. However, due to the ... <a href="http://arxiv.org/abs/2603.28627v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/1905.00275v1" target="_blank">Coherently driving a single quantum two-level system with dichromatic laser pulses</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Yu-Ming He, Hui Wang, Can Wang, Ming-Cheng Chen, Xing Ding, Jian Qin, Zhao-Chen Duan, Si Chen, Jin-Peng Li, Run-Ze Liu, Christian Schneider, Mete Atature, Sven Hoefling, Chao-Yang Lu, Jian-Wei Pan</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2019-05-01</span>
+                    </div>
+                    <div class="summary">Efficient excitation of a single two-level system usually requires that the driving field is at the same frequency as the atomic transition. However, the scattered laser light in solid-state implementations can dominate over the single photons, imposing an outstanding challenge to perfect single-photon sources. Here, we propose a background-free me...</div>
+                    <a href="http://arxiv.org/abs/1905.00275v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
+                </div>
+                <h2 class="section-title">Papers from Top Authors</h2>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.11952v1" target="_blank">A Relativizing MIP for BQP</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Scott Aaronson, Anand Natarajan, Avishay Tal, Agi Villanyi</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-13</span>
+                    </div>
+                    <div class="summary">Complexity class containments involving interactive proof classes are famously nonrelativizing: although $\mathsf{IP} = \mathsf{PSPACE}$, Fortnow and Sipser showed that that there exists an oracle relative to which $\mathsf{coNP} \not\subseteq \mathsf{IP}$. In contrast, the question of whether the containment $\mathsf{BQP} \subseteq \mathsf{IP}$ is...</div>
+                    <a href="http://arxiv.org/abs/2604.11952v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.25782v1" target="_blank">Negative energies and the breakdown of bulk geometry</a></h3>
-                    <div class="meta">By John Preskill, Mykhaylo Usatyuk, Shreya Vardhan • Published: 2026-03-26</div>
-                    <div class="summary">One central question in quantum gravity is to understand how and why predictions from semiclassical gravity can break down in regimes with low spacetime curvature. One diagnostic of such a breakdown is that states which are orthonormal at the semiclassical level can receive large corrections to thei... <a href="http://arxiv.org/abs/2603.25782v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2604.07639v1" target="_blank">Exponential quantum advantage in processing massive classical data</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Haimeng Zhao, Alexander Zlokapa, Hartmut Neven, Ryan Babbush, John Preskill, Jarrod R. McClean, Hsin-Yuan Huang</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-04-08</span>
+                    </div>
+                    <div class="summary">Broadly applicable quantum advantage, particularly in classical data processing and machine learning, has been a fundamental open problem. In this work, we prove that a small quantum computer of polylogarithmic size can perform large-scale classification and dimension reduction on massive classical data by processing samples on the fly, whereas any...</div>
+                    <a href="http://arxiv.org/abs/2604.07639v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.18136v1" target="_blank">Towards sample-optimal learning of bosonic Gaussian quantum states</a></h3>
-                    <div class="meta">By Senrui Chen, Francesco Anna Mele, Marco Fanizza, Alfred Li, Zachary Mann, Hsin-Yuan Huang, Yanbei Chen, John Preskill • Published: 2026-03-18</div>
-                    <div class="summary">Continuous-variable systems enable key quantum technologies in computation, communication, and sensing. Bosonic Gaussian states emerge naturally in various such applications, including gravitational-wave and dark-matter detection. A fundamental question is how to characterize an unknown bosonic Gaus... <a href="http://arxiv.org/abs/2603.18136v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.28627v1" target="_blank">Shor's algorithm is possible with as few as 10,000 reconfigurable atomic qubits</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Madelyn Cain, Qian Xu, Robbie King, Lewis R. B. Picard, Harry Levine, Manuel Endres, John Preskill, Hsin-Yuan Huang, Dolev Bluvstein</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-30</span>
+                    </div>
+                    <div class="summary">Quantum computers have the potential to perform computational tasks beyond the reach of classical machines. A prominent example is Shor's algorithm for integer factorization and discrete logarithms, which is of both fundamental importance and practical relevance to cryptography. However, due to the high overhead of quantum error correction, optimiz...</div>
+                    <a href="http://arxiv.org/abs/2603.28627v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2603.13475v1" target="_blank">State-dependent geometries from magic-enriched quantum codes</a></h3>
-                    <div class="meta">By ChunJun Cao, Gong Cheng, Krishnanand Karthikeyan, Cathy Li, John Preskill • Published: 2026-03-13</div>
-                    <div class="summary">Quantum error-correcting codes provide a powerful framework for emergent spacetime, yet existing holographic code models describe only quantum fields on a fixed background: in exact erasure-correcting codes, the entropic area term is state independent and cannot capture gravitational backreaction. W... <a href="http://arxiv.org/abs/2603.13475v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.25782v1" target="_blank">Negative energies and the breakdown of bulk geometry</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;John Preskill, Mykhaylo Usatyuk, Shreya Vardhan</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-26</span>
+                    </div>
+                    <div class="summary">One central question in quantum gravity is to understand how and why predictions from semiclassical gravity can break down in regimes with low spacetime curvature. One diagnostic of such a breakdown is that states which are orthonormal at the semiclassical level can receive large corrections to their inner products from quantum fluctuations. We stu...</div>
+                    <a href="http://arxiv.org/abs/2603.25782v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2602.17647v1" target="_blank">Pseudo-deterministic Quantum Algorithms</a></h3>
-                    <div class="meta">By Hugo Aaronson, Tom Gur, Jiawei Li • Published: 2026-02-19</div>
-                    <div class="summary">We initiate a systematic study of pseudo-deterministic quantum algorithms. These are quantum algorithms that, for any input, output a canonical solution with high probability. Focusing on the query complexity model, our main contributions include the following complexity separations, which require n... <a href="http://arxiv.org/abs/2602.17647v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.18136v1" target="_blank">Towards sample-optimal learning of bosonic Gaussian quantum states</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Senrui Chen, Francesco Anna Mele, Marco Fanizza, Alfred Li, Zachary Mann, Hsin-Yuan Huang, Yanbei Chen, John Preskill</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-18</span>
+                    </div>
+                    <div class="summary">Continuous-variable systems enable key quantum technologies in computation, communication, and sensing. Bosonic Gaussian states emerge naturally in various such applications, including gravitational-wave and dark-matter detection. A fundamental question is how to characterize an unknown bosonic Gaussian state from as few samples as possible. Despit...</div>
+                    <a href="http://arxiv.org/abs/2603.18136v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2601.04304v1" target="_blank">Chiral Lattice Gauge Theories from Symmetry Disentanglers</a></h3>
-                    <div class="meta">By Ryan Thorngren, John Preskill, Lukasz Fidkowski • Published: 2026-01-07</div>
-                    <div class="summary">We propose a Hamiltonian framework for constructing chiral gauge theories on the lattice based on symmetry disentanglers: constant-depth circuits of local unitaries that transform not-on-site symmetries into on-site ones. When chiral symmetry can be realized not-on-site and such a disentangler exist... <a href="http://arxiv.org/abs/2601.04304v1" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2603.13475v1" target="_blank">State-dependent geometries from magic-enriched quantum codes</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;ChunJun Cao, Gong Cheng, Krishnanand Karthikeyan, Cathy Li, John Preskill</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-03-13</span>
+                    </div>
+                    <div class="summary">Quantum error-correcting codes provide a powerful framework for emergent spacetime, yet existing holographic code models describe only quantum fields on a fixed background: in exact erasure-correcting codes, the entropic area term is state independent and cannot capture gravitational backreaction. We argue that this limitation is intrinsic to exact...</div>
+                    <a href="http://arxiv.org/abs/2603.13475v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2601.00266v2" target="_blank">Nature is stingy: Universality of Scrooge ensembles in quantum many-body systems</a></h3>
-                    <div class="meta">By Wai-Keong Mok, Tobias Haug, Wen Wei Ho, John Preskill • Published: 2026-01-01</div>
-                    <div class="summary">Recent advances in quantum simulators allow direct experimental access to ensembles of pure states generated by measuring part of an isolated quantum many-body system. These projected ensembles encode fine-grained information beyond thermal expectation values and provide a new window into quantum th... <a href="http://arxiv.org/abs/2601.00266v2" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2602.17647v1" target="_blank">Pseudo-deterministic Quantum Algorithms</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Hugo Aaronson, Tom Gur, Jiawei Li</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-02-19</span>
+                    </div>
+                    <div class="summary">We initiate a systematic study of pseudo-deterministic quantum algorithms. These are quantum algorithms that, for any input, output a canonical solution with high probability. Focusing on the query complexity model, our main contributions include the following complexity separations, which require new lower bound techniques specifically tailored to...</div>
+                    <a href="http://arxiv.org/abs/2602.17647v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
-                <div class="paper">
-                    <h3><a href="http://arxiv.org/abs/2510.19928v2" target="_blank">Mind the gaps: The fraught road to quantum advantage</a></h3>
-                    <div class="meta">By Jens Eisert, John Preskill • Published: 2025-10-22</div>
-                    <div class="summary">Quantum computing is advancing rapidly, yet substantial gaps separate today's noisy intermediate-scale quantum (NISQ) devices from tomorrow's fault-tolerant application-scale quantum (FASQ) machines. We identify four related hurdles along the road ahead: (i) from error mitigation to active error det... <a href="http://arxiv.org/abs/2510.19928v2" target="_blank">Read more</a></div>
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2601.04304v1" target="_blank">Chiral Lattice Gauge Theories from Symmetry Disentanglers</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Ryan Thorngren, John Preskill, Lukasz Fidkowski</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-01-07</span>
+                    </div>
+                    <div class="summary">We propose a Hamiltonian framework for constructing chiral gauge theories on the lattice based on symmetry disentanglers: constant-depth circuits of local unitaries that transform not-on-site symmetries into on-site ones. When chiral symmetry can be realized not-on-site and such a disentangler exists, the symmetry can be implemented in a strictly l...</div>
+                    <a href="http://arxiv.org/abs/2601.04304v1" target="_blank" class="read-more-btn">Read Full Paper →</a>
                 </div>
                 
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2601.00266v2" target="_blank">Nature is stingy: Universality of Scrooge ensembles in quantum many-body systems</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Wai-Keong Mok, Tobias Haug, Wen Wei Ho, John Preskill</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2026-01-01</span>
+                    </div>
+                    <div class="summary">Recent advances in quantum simulators allow direct experimental access to ensembles of pure states generated by measuring part of an isolated quantum many-body system. These projected ensembles encode fine-grained information beyond thermal expectation values and provide a new window into quantum thermalization. In chaotic dynamics, projected ensem...</div>
+                    <a href="http://arxiv.org/abs/2601.00266v2" target="_blank" class="read-more-btn">Read Full Paper →</a>
+                </div>
+                
+                <div class="paper-card">
+                    <h3 class="paper-title"><a href="http://arxiv.org/abs/2510.19928v2" target="_blank">Mind the gaps: The fraught road to quantum advantage</a></h3>
+                    <div class="meta-info">
+                        <span class="meta-item"><strong>Author(s):</strong>&nbsp;Jens Eisert, John Preskill</span>
+                        <span class="meta-item"><strong>Published:</strong>&nbsp;2025-10-22</span>
+                    </div>
+                    <div class="summary">Quantum computing is advancing rapidly, yet substantial gaps separate today's noisy intermediate-scale quantum (NISQ) devices from tomorrow's fault-tolerant application-scale quantum (FASQ) machines. We identify four related hurdles along the road ahead: (i) from error mitigation to active error detection and correction, (ii) from rudimentary error...</div>
+                    <a href="http://arxiv.org/abs/2510.19928v2" target="_blank" class="read-more-btn">Read Full Paper →</a>
+                </div>
+                </div>
+        </div>
     </body>
     </html>
     
